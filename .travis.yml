@@ -18,6 +18,10 @@ python:
   - "3.4"
   - "3.5"
 
+# slack notification key
+ notifications:
+    slack: andela:5F0oqWhRsEmzKEmmfCPnhdxb
+
 # Manually define here the combinations environment variables to test
 # https://github.com/travis-ci/travis-ci/issues/1519
 env:
