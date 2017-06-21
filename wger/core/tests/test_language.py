@@ -1,3 +1,4 @@
+"""Module to test for correct language"""
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -21,7 +22,8 @@ from wger.core.models import Language
 from wger.core.tests import api_base_test
 from wger.core.tests.base_testcase import WorkoutManagerAccessTestCase
 from wger.core.tests.base_testcase import WorkoutManagerAddTestCase
-from wger.core.tests.base_testcase import WorkoutManagerDeleteTestCase, WorkoutManagerTestCase
+from wger.core.tests.base_testcase import (WorkoutManagerDeleteTestCase,
+                                           WorkoutManagerTestCase)
 from wger.core.tests.base_testcase import WorkoutManagerEditTestCase
 
 
@@ -34,7 +36,8 @@ class LanguageRepresentationTestCase(WorkoutManagerTestCase):
         '''
         Test that the representation of an object is correct
         '''
-        self.assertEqual("{0}".format(Language.objects.get(pk=1)), 'Deutsch (de)')
+        self.assertEqual("{0}".format(Language.objects.get(pk=1)),
+                         'Deutsch (de)')
 
 
 class LanguageOverviewTest(WorkoutManagerAccessTestCase):
