@@ -19,7 +19,7 @@ python:
   - "3.5"
 
 # slack notification key
- notifications:
+notifications:
   slack: andela:5F0oqWhRsEmzKEmmfCPnhdxb
 
 # Manually define here the combinations environment variables to test
