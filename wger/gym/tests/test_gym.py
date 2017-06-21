@@ -1,3 +1,4 @@
+"""Module tests for gym"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -107,6 +108,7 @@ class DeleteGymTestCase(WorkoutManagerDeleteTestCase):
                  'trainer4',
                  'manager1',
                  'manager3')
+
 
 delete_testcase_add_methods(DeleteGymTestCase)
 
