@@ -1,3 +1,4 @@
+"""Test module for the GymConfig Module"""
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -70,7 +71,8 @@ class GymConfigTestCase(WorkoutManagerTestCase):
 
         new_user = User.objects.all().last()
         self.assertEqual(new_user.userprofile.gym_id, None)
-        self.assertRaises(GymUserConfig.DoesNotExist, GymUserConfig.objects.get, user=new_user)
+        self.assertRaises(GymUserConfig.DoesNotExist,
+                          GymUserConfig.objects.get, user=new_user)
 
     def test_update_userprofile(self):
         '''
