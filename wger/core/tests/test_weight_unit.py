@@ -1,3 +1,4 @@
+"""Module to test for the weight  unit used"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify

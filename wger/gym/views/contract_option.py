@@ -1,3 +1,4 @@
+"""Module for contract options"""
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -16,7 +17,8 @@
 
 import logging
 
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import (PermissionRequiredMixin,
+                                        LoginRequiredMixin)
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404
@@ -36,7 +38,8 @@ from wger.gym.models import ContractOption, Gym
 logger = logging.getLogger(__name__)
 
 
-class AddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class AddView(WgerFormMixin, LoginRequiredMixin,
+              PermissionRequiredMixin, CreateView):
     '''
     View to add a new contract option
     '''
@@ -51,7 +54,8 @@ class AddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Create
         '''
         Redirect back to overview page
         '''
-        return reverse('gym:contract-option:list', kwargs={'gym_pk': self.object.gym_id})
+        return reverse('gym:contract-option:list',
+                       kwargs={'gym_pk': self.object.gym_id})
 
     def dispatch(self, request, *args, **kwargs):
         '''
@@ -77,12 +81,14 @@ class AddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Create
         Send some additional data to the template
         '''
         context = super(AddView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('gym:contract-option:add',
-                                         kwargs={'gym_pk': self.kwargs['gym_pk']})
+        context['form_action'] =\
+            reverse('gym:contract-option:add',
+                    kwargs={'gym_pk': self.kwargs['gym_pk']})
         return context
 
 
-class UpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class UpdateView(WgerFormMixin, LoginRequiredMixin,
+                 PermissionRequiredMixin, UpdateView):
     '''
     View to update an existing contract option
     '''
@@ -109,7 +115,8 @@ class UpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Upd
         '''
         Redirect back to overview page
         '''
-        return reverse('gym:contract-option:list', kwargs={'gym_pk': self.object.gym_id})
+        return reverse('gym:contract-option:list',
+                       kwargs={'gym_pk': self.object.gym_id})
 
     def get_context_data(self, **kwargs):
         '''
@@ -120,7 +127,8 @@ class UpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Upd
         return context
 
 
-class DeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class DeleteView(WgerDeleteMixin, LoginRequiredMixin,
+                 PermissionRequiredMixin, DeleteView):
     '''
     View to delete an existing contract option
     '''
@@ -147,7 +155,8 @@ class DeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin, D
         '''
         Redirect back to overview page
         '''
-        return reverse('gym:contract-option:list', kwargs={'gym_pk': self.object.gym_id})
+        return reverse('gym:contract-option:list',
+                       kwargs={'gym_pk': self.object.gym_id})
 
     def get_context_data(self, **kwargs):
         '''

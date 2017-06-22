@@ -1,3 +1,4 @@
+"""user  application configuration for the app"""
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -18,8 +19,6 @@ from django.apps import AppConfig
 
 
 class CoreConfig(AppConfig):
+    """Core configuroation logic"""
     name = 'wger.core'
     verbose_name = "Core"
-
-    def ready(self):
-        import wger.core.signals

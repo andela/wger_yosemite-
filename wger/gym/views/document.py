@@ -1,3 +1,4 @@
+"""Module for documents"""
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -16,7 +17,8 @@
 import logging
 
 from django.core.urlresolvers import reverse
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import (PermissionRequiredMixin,
+                                        LoginRequiredMixin)
 from django.contrib.auth.models import User
 from django.http.response import HttpResponseForbidden
 from django.utils.translation import ugettext as _
@@ -72,12 +74,14 @@ class ListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         '''
         context = super(ListView, self).get_context_data(**kwargs)
         context['form_action'] = reverse('gym:document:add',
-                                         kwargs={'user_pk': self.kwargs['user_pk']})
+                                         kwargs={'user_pk':
+                                                 self.kwargs['user_pk']})
         context['member'] = self.member
         return context
 
 
-class AddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class AddView(WgerFormMixin, LoginRequiredMixin,
+              PermissionRequiredMixin, CreateView):
     '''
     View to add a new document
     '''
@@ -125,11 +129,13 @@ class AddView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Create
         context = super(AddView, self).get_context_data(**kwargs)
         context['enctype'] = 'multipart/form-data'
         context['form_action'] = reverse('gym:document:add',
-                                         kwargs={'user_pk': self.kwargs['user_pk']})
+                                         kwargs={'user_pk':
+                                                 self.kwargs['user_pk']})
         return context
 
 
-class UpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class UpdateView(WgerFormMixin, LoginRequiredMixin,
+                 PermissionRequiredMixin, UpdateView):
     '''
     View to update an existing document
     '''
@@ -163,12 +169,14 @@ class UpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin, Upd
         Send some additional data to the template
         '''
         context = super(UpdateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('gym:document:edit', kwargs={'pk': self.object.id})
+        context['form_action'] = reverse(
+            'gym:document:edit', kwargs={'pk': self.object.id})
         context['title'] = _(u'Edit {0}').format(self.object)
         return context
 
 
-class DeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class DeleteView(WgerDeleteMixin, LoginRequiredMixin,
+                 PermissionRequiredMixin, DeleteView):
     '''
     View to delete an existing document
     '''
@@ -181,7 +189,8 @@ class DeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin, D
         '''
         Redirect back to user page
         '''
-        return reverse('gym:document:list', kwargs={'user_pk': self.object.member.pk})
+        return reverse('gym:document:list',
+                       kwargs={'user_pk': self.object.member.pk})
 
     def dispatch(self, request, *args, **kwargs):
         '''
@@ -201,5 +210,6 @@ class DeleteView(WgerDeleteMixin, LoginRequiredMixin, PermissionRequiredMixin, D
         '''
         context = super(DeleteView, self).get_context_data(**kwargs)
         context['title'] = _(u'Delete {0}?').format(self.object)
-        context['form_action'] = reverse('gym:document:delete', kwargs={'pk': self.kwargs['pk']})
+        context['form_action'] = reverse('gym:document:delete', kwargs={
+                                         'pk': self.kwargs['pk']})
         return context

@@ -1,3 +1,5 @@
+"""Flask module for  defining your script commands"""
+
 #!/usr/bin/env python
 import sys
 

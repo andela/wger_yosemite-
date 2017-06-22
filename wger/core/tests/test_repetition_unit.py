@@ -1,3 +1,4 @@
+"""Module for testing for repetition"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -34,7 +35,8 @@ class RepresentationTestCase(WorkoutManagerTestCase):
         '''
         Test that the representation of an object is correct
         '''
-        self.assertEqual("{0}".format(RepetitionUnit.objects.get(pk=1)), 'Repetitions')
+        self.assertEqual("{0}".format(RepetitionUnit.objects.get(pk=1)),
+                         'Repetitions')
 
 
 class OverviewTest(WorkoutManagerAccessTestCase):
