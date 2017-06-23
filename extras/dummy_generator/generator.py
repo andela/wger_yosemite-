@@ -62,8 +62,10 @@ from wger.nutrition.models import (
     MealItem
 )
 
-parser = argparse.ArgumentParser(description='Data generator. Please consult the documentation')
-subparsers = parser.add_subparsers(help='The kind of entries you want to generate')
+parser = argparse.ArgumentParser(description='Data generator.'
+                                 ' Please consult the documentation')
+subparsers = parser.add_subparsers(help='The kind of entries you'
+                                   ' want to generate')
 
 # User options
 user_parser = subparsers.add_parser('users', help='Create users')
@@ -74,12 +76,14 @@ user_parser.add_argument('number_users',
 user_parser.add_argument('--add-to-gym',
                          action='store',
                          default='auto',
-                         help='Gym to assign the users to. Allowed values: auto, none, <gym_id>. '
+                         help='Gym to assign the users to.'
+                         ' Allowed values: auto, none, <gym_id>. '
                               'Default: auto')
 user_parser.add_argument('--country',
                          action='store',
                          default='germany',
-                         help='What country the generated users should belong to. Default: Germany',
+                         help='What country the generated users'
+                              ' should belong to. Default: Germany',
                          choices=['germany', 'ukraine', 'spain'])
 
 # Workout options
@@ -90,7 +94,8 @@ workouts_parser.add_argument('number_workouts',
                              type=int)
 workouts_parser.add_argument('--add-to-user',
                              action='store',
-                             help='Add to the specified user-ID, not all existing users')
+                             help='Add to the specified user-ID,'
+                                  ' not all existing users')
 
 # Gym options
 gym_parser = subparsers.add_parser('gyms', help='Create gyms')
@@ -452,7 +457,7 @@ if hasattr(args, 'number_nutrition_plans'):
 
     # Total meals per plan
     total_meals = 4
-    
+
     for user in userlist:
         print('   - generating for {0}'.format(user.username))
 
