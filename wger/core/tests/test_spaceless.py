@@ -1,3 +1,4 @@
+"""Module for testing the custom spaceless template"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -31,7 +32,8 @@ class SpacelessTestCase(WorkoutManagerTestCase):
         Tests the custom spaceless template tag
         '''
         t = Template('{% load wger_extras %}'
-                     '{% spaceless_config %}<p>A text</p>   <p>more</p>{% endspaceless_config %}')
+                     '{% spaceless_config %}<p>A text</p>\
+                      <p>more</p>{% endspaceless_config %}')
         context = Context()
 
         with self.settings(WGER_SETTINGS={'REMOVE_WHITESPACE': True}):

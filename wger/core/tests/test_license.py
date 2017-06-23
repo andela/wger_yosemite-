@@ -1,3 +1,4 @@
+"""Base module for testing License representation"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -15,7 +16,8 @@
 
 from wger.core.models import License
 from wger.core.tests import api_base_test
-from wger.core.tests.base_testcase import WorkoutManagerAccessTestCase, WorkoutManagerTestCase
+from wger.core.tests.base_testcase import (WorkoutManagerAccessTestCase,
+                                           WorkoutManagerTestCase)
 from wger.core.tests.base_testcase import WorkoutManagerAddTestCase
 from wger.core.tests.base_testcase import WorkoutManagerDeleteTestCase
 from wger.core.tests.base_testcase import WorkoutManagerEditTestCase

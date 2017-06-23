@@ -1,3 +1,4 @@
+"""Module tests for admin user notes"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -94,5 +95,6 @@ class DeleteAdminNoteTestCase(WorkoutManagerDeleteTestCase):
                  'trainer4',
                  'general_manager1',
                  'general_manager2')
+
 
 delete_testcase_add_methods(DeleteAdminNoteTestCase)

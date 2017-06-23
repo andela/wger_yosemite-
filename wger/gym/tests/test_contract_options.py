@@ -1,3 +1,4 @@
+"""Module tests for migrations"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -88,6 +89,7 @@ class DeleteContractOptionTestCase(WorkoutManagerDeleteTestCase):
                  'member3',
                  'member4',
                  'member5')
+
 
 delete_testcase_add_methods(DeleteContractOptionTestCase)
 
