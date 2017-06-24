@@ -14,7 +14,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
 import sys
 import time
 import logging
@@ -27,10 +26,7 @@ from invoke import task
 
 import django
 from django.utils.crypto import get_random_string
-from django.core.management import (
-    call_command,
-    execute_from_command_line
-)
+from django.core.management import (call_command, execute_from_command_line)
 
 logger = logging.getLogger(__name__)
 
@@ -239,15 +235,8 @@ def migrate_db(context, settings_path=None):
     call_command("migrate")
 
 
-@task(help={'settings-path': 'Path to settings file (absolute path'
                              ' recommended). Leave empty for default'})
 def load_fixtures(context, settings_path=None):
-    '''
-    Loads all fixtures
-    '''
-
-    # Find the path to the settings and setup the django environment
-    setup_django_environment(settings_path)
     # os.chdir(os.path.dirname(inspect.stack()[0][1]))
     # current_dir = os.path.join(os.getcwd(), 'wger')
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -321,9 +310,9 @@ def get_user_data_path(*args):
     if sys.platform == "win32":
         return win32_get_app_data_path(*args)
 
-    data_home = os.environ.get(
-        'XDG_DATA_HOME', os.path.join(
-            os.path.expanduser('~'), '.local', 'share'))
+    data_home = os.environ.get('XDG_DATA_HOME',
+                               os.path.join(
+                                   os.path.expanduser('~'), '.local', 'share'))
 
     return os.path.join(data_home, *args)
 
@@ -332,8 +321,9 @@ def get_user_config_path(*args):
     if sys.platform == "win32":
         return win32_get_app_data_path(*args)
 
-    config_home = os.environ.get(
-        'XDG_CONFIG_HOME', os.path.join(os.path.expanduser('~'), '.config'))
+    config_home = os.environ.get('XDG_CONFIG_HOME',
+                                 os.path.join(
+                                     os.path.expanduser('~'), '.config'))
 
     return os.path.join(config_home, *args)
 
@@ -341,9 +331,8 @@ def get_user_config_path(*args):
 def win32_get_app_data_path(*args):
     shell32 = ctypes.WinDLL("shell32.dll")
     SHGetFolderPath = shell32.SHGetFolderPathW
-    SHGetFolderPath.argtypes = (
-        ctypes.c_void_p, ctypes.c_int, ctypes.c_void_p, ctypes.c_uint32,
-        ctypes.c_wchar_p)
+    SHGetFolderPath.argtypes = (ctypes.c_void_p, ctypes.c_int, ctypes.c_void_p,
+                                ctypes.c_uint32, ctypes.c_wchar_p)
     SHGetFolderPath.restype = ctypes.c_uint32
 
     CSIDL_LOCAL_APPDATA = 0x001c
