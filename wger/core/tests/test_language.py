@@ -36,8 +36,8 @@ class LanguageRepresentationTestCase(WorkoutManagerTestCase):
         '''
         Test that the representation of an object is correct
         '''
-        self.assertEqual("{0}".format(Language.objects.get(pk=1)),
-                         'Deutsch (de)')
+        self.assertEqual(
+            "{0}".format(Language.objects.get(pk=1)), 'Deutsch (de)')
 
 
 class LanguageOverviewTest(WorkoutManagerAccessTestCase):
@@ -65,8 +65,7 @@ class CreateLanguageTestCase(WorkoutManagerAddTestCase):
 
     object_class = Language
     url = 'core:language:add'
-    data = {'short_name': 'dk',
-            'full_name': 'Dansk'}
+    data = {'short_name': 'dk', 'full_name': 'Dansk'}
 
 
 class EditLanguageTestCase(WorkoutManagerEditTestCase):
@@ -77,8 +76,7 @@ class EditLanguageTestCase(WorkoutManagerEditTestCase):
     object_class = Language
     url = 'core:language:edit'
     pk = 1
-    data = {'short_name': 'dk',
-            'full_name': 'Dansk'}
+    data = {'short_name': 'dk', 'full_name': 'Dansk'}
 
 
 class DeleteLanguageTestCase(WorkoutManagerDeleteTestCase):

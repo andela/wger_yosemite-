@@ -22,11 +22,8 @@ from django.core.cache import cache
 
 from wger.core.models import Language
 from wger.manager.models import Workout, WorkoutLog
-from wger.utils.cache import (
-    reset_workout_canonical_form,
-    reset_workout_log,
-    delete_template_fragment_cache
-)
+from wger.utils.cache import (reset_workout_canonical_form, reset_workout_log,
+                              delete_template_fragment_cache)
 
 
 class Command(BaseCommand):
@@ -34,25 +31,22 @@ class Command(BaseCommand):
     Clears caches (HTML, etc.)
     '''
 
-    option_list = BaseCommand.option_list + (
-        make_option('--clear-template',
-                    action='store_true',
-                    dest='clear_template',
-                    default=False,
-                    help='Clear only template caches'),
-
-        make_option('--clear-workout-cache',
-                    action='store_true',
-                    dest='clear_workout',
-                    default=False,
-                    help='Clear only the workout canonical view'),
-
-        make_option('--clear-all',
-                    action='store_true',
-                    dest='clear_all',
-                    default=False,
-                    help='Clear ALL cached entries'),
-    )
+    option_list = BaseCommand.option_list + (make_option(
+        '--clear-template',
+        action='store_true',
+        dest='clear_template',
+        default=False,
+        help='Clear only template caches'), make_option(
+            '--clear-workout-cache',
+            action='store_true',
+            dest='clear_workout',
+            default=False,
+            help='Clear only the workout canonical view'), make_option(
+                '--clear-all',
+                action='store_true',
+                dest='clear_all',
+                default=False,
+                help='Clear ALL cached entries'), )
 
     help = 'Clears the application cache. '\
         'You *must* pass an option selecting ' \
@@ -63,9 +57,8 @@ class Command(BaseCommand):
         Process the options
         '''
 
-        if (not options['clear_template']
-                and not options['clear_workout']
-                and not options['clear_all']):
+        if (not options['clear_template'] and not options['clear_workout'] and
+                not options['clear_all']):
             raise CommandError('Please select what cache you' +
                                ' need to delete, see help')
 
@@ -76,8 +69,8 @@ class Command(BaseCommand):
 
             for user in User.objects.all():
                 if int(options['verbosity']) >= 2:
-                    self.stdout.write("* Processing user {0}".
-                                      format(user.username))
+                    self.stdout.write(
+                        "* Processing user {0}".format(user.username))
 
                 for entry in WorkoutLog.objects.\
                         filter(user=user).dates('date', 'year'):
@@ -89,8 +82,8 @@ class Command(BaseCommand):
                                date__year=entry.year).dates('date',
                                                             'month'):
                         if int(options['verbosity']) >= 3:
-                            self.stdout.write("    Month {0}".
-                                              format(entry.month))
+                            self.stdout.write(
+                                "    Month {0}".format(entry.month))
                         reset_workout_log(user.id, entry.year, entry.month)
                         for day in WorkoutLog.objects.\
                             filter(user=user,
@@ -100,17 +93,17 @@ class Command(BaseCommand):
                             if int(options['verbosity']) >= 3:
                                 self.stdout.write(
                                     "      Day {0}".format(day.day))
-                            reset_workout_log(
-                                user.id, entry.year, entry.month, day)
+                            reset_workout_log(user.id, entry.year, entry.month,
+                                              day)
 
             for language in Language.objects.all():
                 delete_template_fragment_cache('muscle-overview', language.id)
-                delete_template_fragment_cache(
-                    'exercise-overview', language.id)
-                delete_template_fragment_cache(
-                    'exercise-overview-mobile', language.id)
-                delete_template_fragment_cache(
-                    'equipment-overview', language.id)
+                delete_template_fragment_cache('exercise-overview',
+                                               language.id)
+                delete_template_fragment_cache('exercise-overview-mobile',
+                                               language.id)
+                delete_template_fragment_cache('equipment-overview',
+                                               language.id)
 
         # Workout canonical form
         if options['clear_workout']:

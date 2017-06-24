@@ -22,26 +22,16 @@ from django.contrib.auth.mixins import (PermissionRequiredMixin,
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
-from django.views.generic import (
-    ListView,
-    DeleteView,
-    CreateView,
-    UpdateView
-)
+from django.views.generic import (ListView, DeleteView, CreateView, UpdateView)
 
-from wger.utils.generic_views import (
-    WgerFormMixin,
-    WgerDeleteMixin
-)
+from wger.utils.generic_views import (WgerFormMixin, WgerDeleteMixin)
 
 from wger.core.models import License
-
 
 logger = logging.getLogger(__name__)
 
 
-class LicenseListView(LoginRequiredMixin,
-                      PermissionRequiredMixin, ListView):
+class LicenseListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     '''
     Overview of all available licenses
     '''
@@ -103,6 +93,6 @@ class LicenseDeleteView(WgerDeleteMixin, LoginRequiredMixin,
         '''
         context = super(LicenseDeleteView, self).get_context_data(**kwargs)
         context['title'] = _(u'Delete {0}?').format(self.object)
-        context['form_action'] = reverse('core:license:delete', kwargs={
-                                         'pk': self.kwargs['pk']})
+        context['form_action'] = reverse(
+            'core:license:delete', kwargs={'pk': self.kwargs['pk']})
         return context

@@ -13,7 +13,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -304,8 +303,8 @@ class ApiPatchTestCase(object):
             # Authorized user (owner)
             self.get_credentials()
             response = self.client.patch(self.url_detail, data=self.data)
-            self.assertIn(response.status_code,
-                          (status.HTTP_201_CREATED, status.HTTP_200_OK))
+            self.assertIn(response.status_code, (status.HTTP_201_CREATED,
+                                                 status.HTTP_200_OK))
 
             # Try updating each of the object's values
             for key in self.data:
@@ -316,9 +315,8 @@ class ApiPatchTestCase(object):
             # Different logged in user
             self.get_credentials(self.user_fail)
             response = self.client.patch(self.url_detail, data=self.data)
-            self.assertIn(response.status_code,
-                          (status.HTTP_403_FORBIDDEN,
-                           status.HTTP_404_NOT_FOUND))
+            self.assertIn(response.status_code, (status.HTTP_403_FORBIDDEN,
+                                                 status.HTTP_404_NOT_FOUND))
         else:
             # Anonymous user
             response = self.client.patch(self.url_detail, data=self.data)
@@ -410,8 +408,8 @@ class ApiPutTestCase(object):
             # Authorized user (owner)
             self.get_credentials()
             response = self.client.put(self.url_detail, data=self.data)
-            self.assertIn(response.status_code,
-                          (status.HTTP_200_OK, status.HTTP_201_CREATED))
+            self.assertIn(response.status_code, (status.HTTP_200_OK,
+                                                 status.HTTP_201_CREATED))
 
             # Different logged in user
             count_before = self.resource.objects.all().count()
@@ -429,8 +427,8 @@ class ApiPutTestCase(object):
                 obj2 = self.resource.objects.get(pk=self.pk)
                 self.assertNotEqual(obj.get_owner_object().user.username,
                                     obj2.get_owner_object().user.username)
-                self.assertEqual(
-                    obj.get_owner_object().user.username, self.user_fail)
+                self.assertEqual(obj.get_owner_object().user.username,
+                                 self.user_fail)
                 self.assertEqual(count_before + 1, count_after)
 
             elif response.status_code == status.HTTP_403_FORBIDDEN:
@@ -624,14 +622,9 @@ class ApiDeleteTestCase(object):
                              status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-class ApiBaseResourceTestCase(BaseTestCase,
-                              ApiBaseTestCase,
-
-                              ApiGetTestCase,
-                              ApiPostTestCase,
-                              ApiDeleteTestCase,
-                              ApiPutTestCase,
-                              ApiPatchTestCase):
+class ApiBaseResourceTestCase(BaseTestCase, ApiBaseTestCase, ApiGetTestCase,
+                              ApiPostTestCase, ApiDeleteTestCase,
+                              ApiPutTestCase, ApiPatchTestCase):
     '''
     Base test case for the REST API
 

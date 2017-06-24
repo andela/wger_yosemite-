@@ -36,6 +36,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(insert_data,
-                             reverse_code=migrations.RunPython.noop),
+        migrations.RunPython(
+            insert_data, reverse_code=migrations.RunPython.noop),
     ]

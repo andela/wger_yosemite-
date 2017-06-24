@@ -41,14 +41,15 @@ class DeleteUserTestCase(WorkoutManagerTestCase):
 
         # Wrong user password
         if not fail:
-            response = self.client.post(reverse('core:user:delete'),
-                                        {'password': 'not the user password'})
+            response = self.client.post(
+                reverse('core:user:delete'),
+                {'password': 'not the user password'})
             self.assertEqual(response.status_code, 200)
             self.assertEqual(User.objects.filter(username='test').count(), 1)
 
         # Correct user password
-        response = self.client.post(reverse('core:user:delete'),
-                                    {'password': 'testtest'})
+        response = self.client.post(
+            reverse('core:user:delete'), {'password': 'testtest'})
         self.assertEqual(response.status_code, 302)
         if fail:
             self.assertEqual(User.objects.filter(username='test').count(), 1)

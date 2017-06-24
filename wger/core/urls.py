@@ -14,29 +14,17 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 
-
-from django.conf.urls import (
-    url,
-    include
-)
+from django.conf.urls import (url, include)
 from django.views.generic import TemplateView
 from django.contrib.auth import views
 from django.core.urlresolvers import reverse_lazy
 
-from wger.core.views import (
-    user,
-    misc,
-    license,
-    languages,
-    repetition_units,
-    weight_units
-)
+from wger.core.views import (user, misc, license, languages, repetition_units,
+                             weight_units)
 
 # sub patterns for languages
 patterns_language = [
-    url(r'^list$',
-        languages.LanguageListView.as_view(),
-        name='overview'),
+    url(r'^list$', languages.LanguageListView.as_view(), name='overview'),
     url(r'^(?P<pk>\d+)/view$',
         languages.LanguageDetailView.as_view(),
         name='view'),
@@ -46,9 +34,7 @@ patterns_language = [
     url(r'^(?P<pk>\d+)/edit',
         languages.LanguageEditView.as_view(),
         name='edit'),
-    url(r'^add$',
-        languages.LanguageCreateView.as_view(),
-        name='add'),
+    url(r'^add$', languages.LanguageCreateView.as_view(), name='add'),
 ]
 
 # sub patterns for user
@@ -127,15 +113,10 @@ patterns_user = [
         name='password_reset_complete'),
 ]
 
-
 # sub patterns for licenses
 patterns_license = [
-    url(r'^license/list$',
-        license.LicenseListView.as_view(),
-        name='list'),
-    url(r'^license/add$',
-        license.LicenseAddView.as_view(),
-        name='add'),
+    url(r'^license/list$', license.LicenseListView.as_view(), name='list'),
+    url(r'^license/add$', license.LicenseAddView.as_view(), name='add'),
     url(r'^license/(?P<pk>\d+)/edit',
         license.LicenseUpdateView.as_view(),
         name='edit'),
@@ -146,12 +127,8 @@ patterns_license = [
 
 # sub patterns for setting units
 patterns_repetition_units = [
-    url(r'^list$',
-        repetition_units.ListView.as_view(),
-        name='list'),
-    url(r'^add$',
-        repetition_units.AddView.as_view(),
-        name='add'),
+    url(r'^list$', repetition_units.ListView.as_view(), name='list'),
+    url(r'^add$', repetition_units.AddView.as_view(), name='add'),
     url(r'^(?P<pk>\d+)/edit',
         repetition_units.UpdateView.as_view(),
         name='edit'),
@@ -162,20 +139,13 @@ patterns_repetition_units = [
 
 # sub patterns for setting units
 patterns_weight_units = [
-    url(r'^list$',
-        weight_units.ListView.as_view(),
-        name='list'),
-    url(r'^add$',
-        weight_units.AddView.as_view(),
-        name='add'),
-    url(r'^(?P<pk>\d+)/edit',
-        weight_units.UpdateView.as_view(),
-        name='edit'),
+    url(r'^list$', weight_units.ListView.as_view(), name='list'),
+    url(r'^add$', weight_units.AddView.as_view(), name='add'),
+    url(r'^(?P<pk>\d+)/edit', weight_units.UpdateView.as_view(), name='edit'),
     url(r'^(?P<pk>\d+)/delete',
         weight_units.DeleteView.as_view(),
         name='delete'),
 ]
-
 
 #
 # Actual patterns
@@ -183,14 +153,10 @@ patterns_weight_units = [
 urlpatterns = [
 
     # The landing page
-    url(r'^$',
-        misc.index,
-        name='index'),
+    url(r'^$', misc.index, name='index'),
 
     # The dashboard
-    url(r'^dashboard$',
-        misc.dashboard,
-        name='dashboard'),
+    url(r'^dashboard$', misc.dashboard, name='dashboard'),
 
     # Others
     url(r'^about$',
@@ -199,15 +165,12 @@ urlpatterns = [
     url(r'^contact$',
         misc.ContactClassView.as_view(template_name="misc/contact.html"),
         name='contact'),
-    url(r'^feedback$',
-        misc.FeedbackClass.as_view(),
-        name='feedback'),
-
+    url(r'^feedback$', misc.FeedbackClass.as_view(), name='feedback'),
     url(r'^language/', include(patterns_language, namespace="language")),
     url(r'^user/', include(patterns_user, namespace="user")),
     url(r'^license/', include(patterns_license, namespace="license")),
-    url(r'^repetition-unit/', include(patterns_repetition_units,
-                                      namespace="repetition-unit")),
-    url(r'^weight-unit/', include(patterns_weight_units,
-                                  namespace="weight-unit")),
+    url(r'^repetition-unit/',
+        include(patterns_repetition_units, namespace="repetition-unit")),
+    url(r'^weight-unit/',
+        include(patterns_weight_units, namespace="weight-unit")),
 ]

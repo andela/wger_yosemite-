@@ -60,8 +60,8 @@ class ApiKeyTestCase(WorkoutManagerTestCase):
         user = User.objects.get(username='test')
         key_before = Token.objects.get(user=user)
 
-        response = self.client.get(reverse('core:user:api-key'),
-                                   {'new_key': True})
+        response = self.client.get(
+            reverse('core:user:api-key'), {'new_key': True})
         self.assertEqual(response.status_code, 302)
         response = self.client.get(response['Location'])
         self.assertEqual(response.status_code, 200)

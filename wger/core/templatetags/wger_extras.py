@@ -16,24 +16,14 @@
 
 from django import template
 from django.conf import settings
-from django.forms.widgets import (
-    CheckboxInput,
-    ClearableFileInput
-)
+from django.forms.widgets import (CheckboxInput, ClearableFileInput)
 from django.utils.safestring import mark_safe
-from django.utils.translation import (
-    ugettext_lazy as _,
-    pgettext
-)
+from django.utils.translation import (ugettext_lazy as _, pgettext)
 
-from wger.utils.constants import (
-    PAGINATION_MAX_TOTAL_PAGES,
-    PAGINATION_PAGES_AROUND_CURRENT
-)
-from wger.utils.widgets import (
-    BootstrapSelectMultipleTranslatedOriginal,
-    BootstrapSelectMultiple
-)
+from wger.utils.constants import (PAGINATION_MAX_TOTAL_PAGES,
+                                  PAGINATION_PAGES_AROUND_CURRENT)
+from wger.utils.widgets import (BootstrapSelectMultipleTranslatedOriginal,
+                                BootstrapSelectMultiple)
 
 register = template.Library()
 
@@ -55,9 +45,11 @@ def render_day(day, editable=True):
     '''
     Renders a day as it will be displayed in the workout overview
     '''
-    return {'day': day.canonical_representation,
-            'workout': day.training,
-            'editable': editable}
+    return {
+        'day': day.canonical_representation,
+        'workout': day.training,
+        'editable': editable
+    }
 
 
 @register.inclusion_tag('tags/pagination.html')
@@ -91,8 +83,7 @@ def pagination(paginator, page):
         page_range = paginator.page_range
 
     # Set the template variables
-    return {'page': page,
-            'page_range': page_range}
+    return {'page': page, 'page_range': page_range}
 
 
 @register.inclusion_tag('tags/render_weight_log.html')
@@ -101,9 +92,7 @@ def render_weight_log(log, div_uuid, user=None):
     Renders a weight log series
     '''
 
-    return {'log': log,
-            'div_uuid': div_uuid,
-            'user': user}
+    return {'log': log, 'div_uuid': div_uuid, 'user': user}
 
 
 @register.inclusion_tag('tags/license-sidebar.html')
@@ -112,8 +101,7 @@ def license_sidebar(license, author=None):
     Renders the license notice for exercises
     '''
 
-    return {'license': license,
-            'author': author}
+    return {'license': license, 'author': author}
 
 
 @register.inclusion_tag('tags/language_select.html', takes_context=True)
@@ -122,9 +110,11 @@ def language_select(context, language):
     Renders a link to change the current language.
     '''
 
-    return {'language_name': language[1],
-            'path': 'images/icons/flag-{0}.svg'.format(language[0]),
-            'i18n_path': context['i18n_path'][language[0]]}
+    return {
+        'language_name': language[1],
+        'path': 'images/icons/flag-{0}.svg'.format(language[0]),
+        'i18n_path': context['i18n_path'][language[0]]
+    }
 
 
 @register.filter
@@ -209,14 +199,15 @@ def format_username(user):
 
 class SpacelessNode(template.base.Node):
     """Class SpacelessNode"""
+
     def __init__(self, nodelist):
         self.nodelist = nodelist
 
     def render(self, context):
         if settings.WGER_SETTINGS['REMOVE_WHITESPACE']:
             from django.utils.html import strip_spaces_between_tags
-            return strip_spaces_between_tags(self.
-                                             nodelist.render(context).strip())
+            return strip_spaces_between_tags(
+                self.nodelist.render(context).strip())
         else:
             return self.nodelist.render(context)
 
@@ -227,7 +218,7 @@ def spaceless_config(parser, token):
     This is django's spaceless tag, copied here to use our configurable
     SpacelessNode
     '''
-    nodelist = parser.parse(('endspaceless_config',))
+    nodelist = parser.parse(('endspaceless_config', ))
     parser.delete_first_token()
     return SpacelessNode(nodelist)
 
@@ -303,19 +294,13 @@ def render_form_submit(save_text='Save', button_class='default'):
     :param save_text: the text to use on the submit button
     :param button_class: CSS class to apply to the button, default 'default'
     """
-    if button_class in ('default',
-                        'primary',
-                        'success',
-                        'info',
-                        'warning',
-                        'danger',
-                        'link'):
+    if button_class in ('default', 'primary', 'success', 'info', 'warning',
+                        'danger', 'link'):
         button_class = button_class
     else:
         button_class = 'default'
 
-    return {'save_text': save_text,
-            'button_class': button_class}
+    return {'save_text': save_text, 'button_class': button_class}
 
 
 @register.inclusion_tag('tags/render_form_errors.html')
@@ -348,6 +333,4 @@ def render_form_fields(form, submit_text='Save', show_save=True):
     :param save_text: the text to use on the submit button
     '''
 
-    return {'form': form,
-            'show_save': show_save,
-            'submit_text': submit_text}
+    return {'form': form, 'show_save': show_save, 'submit_text': submit_text}
