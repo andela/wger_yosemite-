@@ -27,5 +27,4 @@ class ExercisesSitemap(Sitemap):
     def items(self):
         language_list = load_item_languages
         (LanguageConfig.SHOW_ITEM_EXERCISES)
-        return Exercise.objects.accepted().
-        filter(language__in=language_list)
+        return Exercise.objects.accepted().filter(language__in=language_list)

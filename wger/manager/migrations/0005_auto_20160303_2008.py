@@ -39,8 +39,7 @@ class Migration(migrations.Migration):
                 verbose_name='Is a loop',
                 default=False,
                 help_text='Tick the box if you want to repeat the schedules'
-                ' in a loop (i.e. A, B, C, A, B, C, and so on)'
-            ), ),
+                ' in a loop (i.e. A, B, C, A, B, C, and so on)'), ),
         migrations.AlterField(
             model_name='schedulestep',
             name='order',

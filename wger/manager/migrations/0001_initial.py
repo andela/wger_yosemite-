@@ -25,12 +25,11 @@ class Migration(migrations.Migration):
                     serialize=False,
                     auto_created=True,
                     primary_key=True)),
-                ('description', models.
-                 CharField(
-                     help_text='Ususally a description about what '
-                     'parts are trained, like "Arms" or "Pull Day"',
-                     max_length=100,
-                     verbose_name='Description')),
+                ('description', models.CharField(
+                    help_text='Ususally a description about what '
+                    'parts are trained, like "Arms" or "Pull Day"',
+                    max_length=100,
+                    verbose_name='Description')),
                 ('day', models.ManyToManyField(
                     to='core.DaysOfWeek', verbose_name='Day')),
             ],
@@ -44,12 +43,11 @@ class Migration(migrations.Migration):
                     serialize=False,
                     auto_created=True,
                     primary_key=True)),
-                ('name', models.
-                 CharField(
-                     help_text="Name or short description of the schedule." +
-                     " For example 'Program XYZ'.",
-                     max_length=100,
-                     verbose_name='Name')),
+                ('name', models.CharField(
+                    help_text="Name or short description of the schedule." +
+                    " For example 'Program XYZ'.",
+                    max_length=100,
+                    verbose_name='Name')),
                 ('start_date', wger.utils.fields.Html5DateField(
                     default=datetime.date.today, verbose_name='Start date')),
                 ('is_active', models.BooleanField(

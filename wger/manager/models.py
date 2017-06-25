@@ -33,7 +33,7 @@ from sortedm2m.fields import SortedManyToManyField
 
 from wger.core.models import DaysOfWeek, RepetitionUnit, WeightUnit
 from wger.exercises.models import Exercise
-from wger.manager.helpers import reps_smart_texta
+from wger.manager.helpers import reps_smart_text
 from wger.utils.cache import (cache_mapper, reset_workout_canonical_form,
                               reset_workout_log)
 from wger.utils.fields import Html5DateField
@@ -894,8 +894,7 @@ class WorkoutSession(models.Model):
                                                        not self.time_start):
             raise ValidationError(
                 _("If you enter a time, you must enter both start\
-                  and end time."
-                  ))
+                  and end time."))
 
         if self.time_end and self.time_start and self.time_start > \
                 self.time_end:

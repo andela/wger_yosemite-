@@ -178,13 +178,16 @@ class ExercisesEditAddView(WgerFormMixin):
             category = ModelChoiceField(queryset=ExerciseCategory.
                                         objects.all(),
                                         widget=TranslatedSelect())
-            muscles = ModelMultipleChoiceField(queryset=Muscle.objects.all(),
-                                               widget=TranslatedOriginalSelectMultiple(),
-                                               required=False)
+            muscles = ModelMultipleChoiceField(
+                queryset=Muscle.
+                objects.all(),
+                widget=TranslatedOriginalSelectMultiple(),
+                required=False)
 
-            muscles_secondary = ModelMultipleChoiceField(queryset=Muscle.objects.all(),
-                                                         widget=TranslatedOriginalSelectMultiple(),
-                                                         required=False)
+            muscles_secondary = ModelMultipleChoiceField(
+                queryset=Muscle.objects.all(),
+                widget=TranslatedOriginalSelectMultiple(),
+                required=False)
 
             class Meta:
                 model = Exercise

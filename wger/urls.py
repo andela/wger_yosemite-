@@ -23,6 +23,7 @@ from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
+from django.contrib import admin
 
 from wger.nutrition.sitemap import NutritionSitemap
 from wger.exercises.sitemap import ExercisesSitemap
@@ -46,7 +47,7 @@ from wger.weight.api import views as weight_api_views
 # REST API
 #
 
-### /api/v1 - tastypie - deprecated
+# /api/v1 - tastypie - deprecated
 v1_api = Api(api_name='v1')
 
 v1_api.register(exercises_api.ExerciseCategoryResource())
@@ -79,7 +80,7 @@ v1_api.register(core_api.DaysOfWeekResource())
 v1_api.register(core_api.UserProfileResource())
 v1_api.register(core_api.LicenseResource())
 
-### /api/v2 - django rest framework
+# /api/v2 - django rest framework
 router = routers.DefaultRouter()
 
 # Manager app
@@ -166,7 +167,6 @@ router.register(
     weight_api_views.WeightEntryViewSet,
     base_name='weightentry')
 
-from django.contrib import admin
 admin.autodiscover()
 
 #

@@ -26,9 +26,10 @@ import argparse
 from django.db import IntegrityError
 from django.utils.text import slugify
 
-sys.path.insert(0, os.path.join('..', '..'))
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
-django.setup()
+# Nutrition import //_c
+from wger.nutrition.models import (Ingredient, NutritionPlan,
+                                   Meal, MealItem)
+
 
 # Must happen after calling django.setup()
 from django.contrib.auth.models import User
@@ -41,15 +42,11 @@ from wger.weight.models import WeightEntry
 
 from wger.core.models import Language
 
-# Nutrition import //_c
-from wger.nutrition.models import (
-    Ingredient,
-    IngredientWeightUnit,
-    WeightUnit,
-    NutritionPlan,
-    Meal,
-    MealItem
-)
+
+sys.path.insert(0, os.path.join('..', '..'))
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+django.setup()
+
 
 parser = argparse.ArgumentParser(description='Data generator.'
                                  ' Please consult the documentation')
@@ -58,33 +55,35 @@ subparsers = parser.add_subparsers(help='The kind of entries you'
 
 # User options
 user_parser = subparsers.add_parser('users', help='Create users')
-user_parser.add_argument('number_users',
-                         action='store',
-                         help='Number of users to create',
-                         type=int)
-user_parser.add_argument('--add-to-gym',
-                         action='store',
-                         default='auto',
-                         help='Gym to assign the users to.'
-                         ' Allowed values: auto, none, <gym_id>. '
-                              'Default: auto')
-user_parser.add_argument('--country',
-                         action='store',
-                         default='germany',
-                         help='What country the generated users'
-                              ' should belong to. Default: Germany',
-                         choices=['germany', 'ukraine', 'spain'])
+user_parser.add_argument(
+    'number_users', action='store', help='Number of users to create', type=int)
+user_parser.add_argument(
+    '--add-to-gym',
+    action='store',
+    default='auto',
+    help='Gym to assign the users to.'
+    ' Allowed values: auto, none, <gym_id>. '
+    'Default: auto')
+user_parser.add_argument(
+    '--country',
+    action='store',
+    default='germany',
+    help='What country the generated users'
+    ' should belong to. Default: Germany',
+    choices=['germany', 'ukraine', 'spain'])
 
 # Workout options
 workouts_parser = subparsers.add_parser('workouts', help='Create workouts')
-workouts_parser.add_argument('number_workouts',
-                             action='store',
-                             help='Number of workouts to create *per user*',
-                             type=int)
-workouts_parser.add_argument('--add-to-user',
-                             action='store',
-                             help='Add to the specified user-ID,'
-                                  ' not all existing users')
+workouts_parser.add_argument(
+    'number_workouts',
+    action='store',
+    help='Number of workouts to create *per user*',
+    type=int)
+workouts_parser.add_argument(
+    '--add-to-user',
+    action='store',
+    help='Add to the specified user-ID,'
+    ' not all existing users')
 
 # Gym options
 gym_parser = subparsers.add_parser('gyms', help='Create gyms')
@@ -389,7 +388,7 @@ if hasattr(args, 'impression_sessions'):
                     user=user, date=date).first().workout
                 start = datetime.time(
                     hour=random.randint(8, 20), minute=random.randint(0, 59))
-                end = datetime.datetime.combine(datetime.date.today(), start)  \
+                end = datetime.datetime.combine(datetime.date.today(), start) \
                     + datetime.timedelta(minutes=random.randint(40, 120))
                 end = datetime.time(hour=end.hour, minute=end.minute)
 
