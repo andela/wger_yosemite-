@@ -481,9 +481,12 @@ class Day(models.Model):
                     setting_tmp.append(setting)
 
                 # "Smart" textual representation
-                setting_text, setting_list, weight_list, reps_list,
-                repetition_units, weight_units \
-                    = reps_smart_text(setting_tmp, set_obj)
+                setting_list = reps_smart_text(setting_tmp, set_obj)
+                weight_units = reps_smart_text(setting_tmp, set_obj)
+                repetition_units = reps_smart_text(setting_tmp, set_obj)
+                setting_text = reps_smart_text(setting_tmp, set_obj)
+                weight_list = reps_smart_text(setting_tmp, set_obj)
+                reps_list = reps_smart_text(setting_tmp, set_obj)
 
                 # Flag indicating whether all exercises have settings
                 has_setting_tmp = True if len(setting_tmp) > 0 else False
