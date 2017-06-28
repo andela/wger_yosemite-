@@ -38,7 +38,7 @@ class Command(BaseCommand):
     def handle(self, **options):
 
         profile_list = UserProfile.objects.filter(
-                       num_days_weight_reminder__gt=0)
+            num_days_weight_reminder__gt=0)
 
         for profile in profile_list:
 
@@ -51,7 +51,7 @@ class Command(BaseCommand):
 
             try:
                 last_entry = WeightEntry.objects.filter(
-                             user=profile.user).latest().date
+                    user=profile.user).latest().date
                 datediff = (today - last_entry).days
 
                 if datediff >= profile.num_days_weight_reminder:

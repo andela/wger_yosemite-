@@ -20,7 +20,7 @@ from django.core.urlresolvers import reverse
 from wger.core.tests import api_base_test
 from wger.core.tests.base_testcase import WorkoutManagerAddTestCase
 from wger.core.tests.base_testcase import WorkoutManagerEditTestCase,\
- WorkoutManagerTestCase
+    WorkoutManagerTestCase
 from wger.utils.constants import TWOPLACES
 from wger.weight.models import WeightEntry
 

@@ -16,7 +16,7 @@
 
 from django import forms
 from django.forms import Form, CharField, Textarea, ModelForm, DateField,\
-     widgets
+    widgets
 from django.utils.translation import ugettext as _
 
 from wger.utils.constants import DATE_FORMATS

@@ -145,12 +145,12 @@ def overview(request, username=None):
         aggregate(Max('date'))['date__max']
     if min_date:
         template_data['min_date'] = 'new Date(%(year)s, %(month)s, %(day)s)'\
-         % {'year': min_date.year, 'month': min_date.month,
-            'day': min_date.day}
+            % {'year': min_date.year, 'month': min_date.month,
+               'day': min_date.day}
     if max_date:
         template_data['max_date'] = 'new Date(%(year)s, %(month)s, %(day)s)'\
-         % {'year': max_date.year, 'month': max_date.month,
-            'day': max_date.day}
+            % {'year': max_date.year, 'month': max_date.month,
+               'day': max_date.day}
 
     last_weight_entries = helpers.get_last_entries(user)
 
@@ -204,7 +204,7 @@ class WeightCsvImportFormPreview(FormPreview):
 
     def process_preview(self, request, form, context):
         context['weight_list'], context['error_list'] = \
-         helpers.parse_weight_csv(request, form.cleaned_data)
+            helpers.parse_weight_csv(request, form.cleaned_data)
         return context
 
     def done(self, request, cleaned_data):

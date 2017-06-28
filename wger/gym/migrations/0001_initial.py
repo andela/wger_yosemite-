@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                     related_name='adminusernote_member',
                     editable=False,
                     to=settings.AUTH_USER_MODEL)),
-                ('user', models.oreignKey(
+                ('user', models.ForeignKey(
                     related_name='adminusernote_user',
                     editable=False,
                     to=settings.AUTH_USER_MODEL)),
