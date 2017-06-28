@@ -45,8 +45,7 @@ from wger.weight.api import views as weight_api_views
 #
 # REST API
 #
-
-### /api/v1 - tastypie - deprecated
+# /api/v1 - tastypie - deprecated
 v1_api = Api(api_name='v1')
 
 v1_api.register(exercises_api.ExerciseCategoryResource())
@@ -80,7 +79,7 @@ v1_api.register(core_api.UserProfileResource())
 v1_api.register(core_api.LicenseResource())
 
 
-### /api/v2 - django rest framework
+# /api/v2 - django rest framework
 router = routers.DefaultRouter()
 
 # Manager app
@@ -144,6 +143,7 @@ urlpatterns = i18n_patterns(
     url(r'config/', include('wger.config.urls', namespace='config', app_name='config')),
     url(r'gym/', include('wger.gym.urls', namespace='gym', app_name='gym')),
     url(r'email/', include('wger.email.urls', namespace='email')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^sitemap\.xml$',
         sitemap,
         {'sitemaps': sitemaps},
