@@ -48,6 +48,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
 
+    # app for social login
+    'social_django',
+
     # Apps from wger proper
     'wger.config',
     'wger.core',
@@ -88,9 +91,6 @@ INSTALLED_APPS = (
 
     # django-bower for installing bower packages
     'djangobower',
-
-    # app for social login
-    'social_django',
 )
 
 # added list of external libraries to be installed by bower
@@ -137,13 +137,12 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-
+    'django.contrib.auth.backends.ModelBackend',
     'wger.utils.helpers.EmailAuthBackend',
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.facebook.FacebookOAuth2',
-
-    'django.contrib.auth.backends.ModelBackend'
+    'social_core.backends.facebook.FacebookOAuth2'
 
 )
 
@@ -184,9 +183,6 @@ TEMPLATES = [
         },
     },
 ]
-
-
-
 
 # TODO: Temporary fix for django 1.10 and the django-mobile app. If issue #72
 #       is closed, this can be removed.
@@ -414,3 +410,31 @@ WGER_SETTINGS = {
     'EMAIL_FROM': 'wger Workout Manager <wger@example.com>',
     'TWITTER': False
 }
+
+# facebook, twitter, github and google API keys
+# configurations for github
+SOCIAL_AUTH_GITHUB_SECRET = '73f15dcc1b154052584768b6db2875036eb16207'
+SOCIAL_AUTH_GITHUB_KEY = '1d89b4f381c7829a726b'
+
+# configurations for twitter
+SOCIAL_AUTH_TWITTER_KEY = 'Yxotcw96dLupGYVLuHh1FCSiM'
+SOCIAL_AUTH_TWITTER_SECRET = 'iczraaEFLtBKFDoXXn2nYrFQ3nSQetbgbyd9qkoJImhlwSl3eL'
+
+# configurations for facebook
+SOCIAL_AUTH_FB_SECRET = '08568980ad7c2f09cf95cbd9fcd94f4e'
+SOCIAL_AUTH_FB_KEY = '1863950303857081'
+
+# configurations for google
+SOCIAL_AUTH_GOOGLE_SECRET = 'V1LAxkc9bdbgP2O-AmdmcGEX'
+SOCIAL_AUTH_GOOGLE_KEY = '28646330538-5k06psq2mtvc1r9svgkt2llcr57kah9s'
+# SOCIAL_AUTH_TWITTER_KEY = os.getenv('SOCIAL_AUTH_TWITTER_KEY')
+# SOCIAL_AUTH_TWITTER_SECRET = os.getenv('SOCIAL_AUTH_TWITTER_SECRET')
+#
+# SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FB_KEY')
+# SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FB_SECRET')
+#
+# SOCIAL_AUTH_GOOGLE_KEY = os.getenv('SOCIAL_AUTH_GOOGLE_KEY')
+# SOCIAL_AUTH_GOOGLE_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_SECRET')
+#
+# SOCIAL_AUTH_GITHUB_KEY = os.getenv('SOCIAL_AUTH_GITHUB_KEY')
+# SOCIAL_AUTH_GITHUB_SECRET = os.getenv('SOCIAL_AUTH_GITHUB_SECRET')
