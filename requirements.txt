@@ -23,6 +23,7 @@ djangorestframework==3.2.5
 docutils==0.13.1
 easy-thumbnails==2.4.1
 flake8==3.3.0
+gunicorn==19.7.1
 html5lib==0.999999999
 icalendar==3.11.4
 idna==2.5
@@ -54,5 +55,5 @@ sphinxcontrib-websupport==1.0.1
 sqlparse==0.2.3
 urllib3==1.21.1
 webencodings==0.5.1
--e git+https://github.com/andela/wger_yosemite.git@e8061fb3f175482d32a7d7d5546c289c3cc83629#egg=wger
+-e git+https://github.com/andela/wger_yosemite.git@363e018ebe3709fe77e1493703d3ad8c98621c8f#egg=wger
 wrapt==1.10.10
