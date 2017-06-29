@@ -55,5 +55,4 @@ sphinxcontrib-websupport==1.0.1
 sqlparse==0.2.3
 urllib3==1.21.1
 webencodings==0.5.1
--e git+https://github.com/andela/wger_yosemite.git@363e018ebe3709fe77e1493703d3ad8c98621c8f#egg=wger
 wrapt==1.10.10
