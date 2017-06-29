@@ -1,7 +1,8 @@
+"""Generated Migrations module"""
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+from django.db import migrations
 
 
 def insert_data(apps, schema_editor):
@@ -35,5 +36,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(insert_data, reverse_code=migrations.RunPython.noop),
+        migrations.RunPython(
+            insert_data, reverse_code=migrations.RunPython.noop),
     ]

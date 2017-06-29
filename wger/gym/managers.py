@@ -1,3 +1,4 @@
+"""Managers module"""
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -26,6 +27,7 @@ class GymManager(models.Manager):
     '''
     Custom query manager for Gyms
     '''
+
     def get_members(self, gym_pk):
         '''
         Returns all members for this gym (i.e non-admin ones)

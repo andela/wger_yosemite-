@@ -1,3 +1,4 @@
+"""This module tests for password reset"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -38,11 +39,14 @@ class ChangePasswordTestCase(WorkoutManagerTestCase):
             self.assertEqual(response.status_code, 200)
 
         # Fill in the change password form
-        form_data = {'old_password': 'testtest',
-                     'new_password1': 'secret',
-                     'new_password2': 'secret'}
+        form_data = {
+            'old_password': 'testtest',
+            'new_password1': 'secret',
+            'new_password2': 'secret'
+        }
 
-        response = self.client.post(reverse('core:user:change-password'), form_data)
+        response = self.client.post(
+            reverse('core:user:change-password'), form_data)
         self.assertEqual(response.status_code, 302)
 
         # Check the new password was accepted

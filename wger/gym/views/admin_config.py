@@ -1,3 +1,4 @@
+"""Admin configurationmodule"""
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -47,6 +48,7 @@ class ConfigUpdateView(WgerFormMixin, UpdateView):
         Send some additional data to the template
         '''
         context = super(ConfigUpdateView, self).get_context_data(**kwargs)
-        context['form_action'] = reverse('gym:admin_config:edit', kwargs={'pk': self.object.id})
+        context['form_action'] = reverse('gym:admin_config:edit',
+                                         kwargs={'pk': self.object.id})
         context['title'] = _('Configuration')
         return context

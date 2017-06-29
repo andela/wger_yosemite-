@@ -1,3 +1,4 @@
+"""app module"""
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -18,8 +19,6 @@ from django.apps import AppConfig
 
 
 class GymConfig(AppConfig):
+    """GymConfig doctstring"""
     name = 'wger.gym'
     verbose_name = "Gym"
-
-    def ready(self):
-        import wger.gym.signals

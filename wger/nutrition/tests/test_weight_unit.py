@@ -33,7 +33,8 @@ class WeightUnitRepresentationTestCase(WorkoutManagerTestCase):
         '''
         Test that the representation of an object is correct
         '''
-        self.assertEqual("{0}".format(WeightUnit.objects.get(pk=1)), 'Scheibe')
+        self.assertEqual("{0}".format(WeightUnit.objects.get(pk=1)),
+                         'Scheibe')
 
 
 class AddWeightUnitTestCase(WorkoutManagerAddTestCase):
@@ -84,26 +85,33 @@ class WeightUnitOverviewTestCase(WorkoutManagerTestCase):
         # Page exists and the pagination works
         response = self.client.get(reverse('nutrition:weight_unit:list'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context['unit_list']), PAGINATION_OBJECTS_PER_PAGE)
+        self.assertEqual(
+            len(response.context['unit_list']), PAGINATION_OBJECTS_PER_PAGE)
 
-        response = self.client.get(reverse('nutrition:weight_unit:list'), {'page': 2})
+        response = self.client.get(
+            reverse('nutrition:weight_unit:list'), {'page': 2})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context['unit_list']), PAGINATION_OBJECTS_PER_PAGE)
+        self.assertEqual(
+            len(response.context['unit_list']), PAGINATION_OBJECTS_PER_PAGE)
 
-        response = self.client.get(reverse('nutrition:weight_unit:list'), {'page': 3})
+        response = self.client.get(
+            reverse('nutrition:weight_unit:list'), {'page': 3})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['unit_list']), 3)
 
         # 'last' is a special case
-        response = self.client.get(reverse('nutrition:weight_unit:list'), {'page': 'last'})
+        response = self.client.get(
+            reverse('nutrition:weight_unit:list'), {'page': 'last'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['unit_list']), 3)
 
         # Page does not exist
-        response = self.client.get(reverse('nutrition:weight_unit:list'), {'page': 100})
+        response = self.client.get(
+            reverse('nutrition:weight_unit:list'), {'page': 100})
         self.assertEqual(response.status_code, 404)
 
-        response = self.client.get(reverse('nutrition:weight_unit:list'), {'page': 'foobar'})
+        response = self.client.get(
+            reverse('nutrition:weight_unit:list'), {'page': 'foobar'})
         self.assertEqual(response.status_code, 404)
 
 

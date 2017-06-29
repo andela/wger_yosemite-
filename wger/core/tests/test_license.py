@@ -1,3 +1,4 @@
+"""Base module for testing License representation"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -15,7 +16,8 @@
 
 from wger.core.models import License
 from wger.core.tests import api_base_test
-from wger.core.tests.base_testcase import WorkoutManagerAccessTestCase, WorkoutManagerTestCase
+from wger.core.tests.base_testcase import (WorkoutManagerAccessTestCase,
+                                           WorkoutManagerTestCase)
 from wger.core.tests.base_testcase import WorkoutManagerAddTestCase
 from wger.core.tests.base_testcase import WorkoutManagerDeleteTestCase
 from wger.core.tests.base_testcase import WorkoutManagerEditTestCase
@@ -30,8 +32,9 @@ class LicenseRepresentationTestCase(WorkoutManagerTestCase):
         '''
         Test that the representation of an object is correct
         '''
-        self.assertEqual("{0}".format(License.objects.get(pk=1)),
-                         'A cool and free license - Germany (ACAFL - DE)')
+        self.assertEqual(
+            "{0}".format(License.objects.get(pk=1)),
+            'A cool and free license - Germany (ACAFL - DE)')
 
 
 class LicenseOverviewTest(WorkoutManagerAccessTestCase):
@@ -49,8 +52,7 @@ class AddLicenseTestCase(WorkoutManagerAddTestCase):
 
     object_class = License
     url = 'core:license:add'
-    data = {'full_name': 'Something here',
-            'short_name': 'SH'}
+    data = {'full_name': 'Something here', 'short_name': 'SH'}
 
 
 class DeleteLicenseTestCase(WorkoutManagerDeleteTestCase):
@@ -71,8 +73,7 @@ class EditLicenseTestCase(WorkoutManagerEditTestCase):
     object_class = License
     url = 'core:license:edit'
     pk = 1
-    data = {'full_name': 'Something here 1.1',
-            'short_name': 'SH 1.1'}
+    data = {'full_name': 'Something here 1.1', 'short_name': 'SH 1.1'}
 
 
 class LicenseApiTestCase(api_base_test.ApiBaseResourceTestCase):

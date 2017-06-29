@@ -1,3 +1,4 @@
+"""Module for testing the generated robots"""
 # This file is part of wger Workout Manager.
 #
 # wger Workout Manager is free software: you can redistribute it and/or modify
@@ -28,5 +29,5 @@ class RobotsTxtTestCase(WorkoutManagerTestCase):
 
         response = self.client.get(reverse('robots'))
         for lang in Language.objects.all():
-            self.assertTrue('wger.de/{0}/sitemap.xml'.format(lang.short_name)
-                            in six.text_type(response.content))
+            self.assertTrue('wger.de/{0}/sitemap.xml'.format(
+                lang.short_name) in six.text_type(response.content))
