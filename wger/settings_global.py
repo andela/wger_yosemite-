@@ -19,6 +19,7 @@
 import os
 import re
 import sys
+import dj_database_url
 '''
 This file contains the global settings that don't usually need to be changed.
 For a full list of options, visit:
@@ -27,7 +28,9 @@ For a full list of options, visit:
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+# DATABASES[‘default’] = dj_database_url.config()
 
+DATABASES = {'default': dj_database_url.config(default=os.environ["DATABASE_URL"])}
 #
 # Application definition
 #
@@ -85,7 +88,9 @@ INSTALLED_APPS = (
     'corsheaders',
 
     # django-bower for installing bower packages
+
     'djangobower', )
+
 
 # added list of external libraries to be installed by bower
 BOWER_INSTALLED_APPS = ('bootstrap', 'components-font-awesome', 'd3',
@@ -113,7 +118,8 @@ MIDDLEWARE_CLASSES = (
 
     # Django mobile
     'django_mobile.middleware.MobileDetectionMiddleware',
-    'django_mobile.middleware.SetFlavourMiddleware', )
+    'django_mobile.middleware.SetFlavourMiddleware',
+)
 
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
                            'wger.utils.helpers.EmailAuthBackend')
@@ -153,6 +159,7 @@ TEMPLATES = [
     },
 ]
 
+
 # TODO: Temporary fix for django 1.10 and the django-mobile app. If issue #72
 #       is closed, this can be removed.
 #       https://github.com/gregmuellegger/django-mobile/issues/72
@@ -168,6 +175,7 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
 
     # Django compressor
+
     'compressor.finders.CompressorFinder', )
 
 #
@@ -181,6 +189,7 @@ EMAIL_SUBJECT_PREFIX = '[wger] '
 #
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
+
 
 #
 # Internationalization
@@ -199,6 +208,7 @@ USE_L10N = True
 TIME_ZONE = None
 
 # Restrict the available languages
+
 LANGUAGES = (('en', 'English'), ('de', 'German'), ('bg', 'Bulgarian'),
              ('es', 'Spanish'), ('ru', 'Russian'), ('nl', 'Dutch'),
              ('pt', 'Portuguese'), ('el', 'Greek'), ('cs', 'Czech'),
@@ -239,7 +249,7 @@ LOGGING = {
     }
 }
 
-#
+
 # ReCaptcha
 #
 RECAPTCHA_USE_SSL = True
@@ -300,17 +310,28 @@ THUMBNAIL_ALIASES = {
     },
 }
 
+
 #
 # Django compressor
 #
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# The default is not DEBUG, override if needed
+# COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = (
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.rCSSMinFilter'
+)
 
 # The default is not DEBUG, override if needed
 # COMPRESS_ENABLED = True
 COMPRESS_CSS_FILTERS = ('compressor.filters.css_default.CssAbsoluteFilter',
                         'compressor.filters.cssmin.rCSSMinFilter')
+
 COMPRESS_ROOT = STATIC_ROOT
+
 
 # BOWER binary
 if sys.platform.startswith('win32'):
@@ -319,6 +340,7 @@ if sys.platform.startswith('win32'):
 else:
     BOWER_PATH = os.path.abspath(
         os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
+
 
 #
 # Django Rest Framework
@@ -370,6 +392,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 #
 # Application specific configuration options
