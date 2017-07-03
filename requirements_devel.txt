@@ -6,6 +6,5 @@
 -r requirements.txt
 
 # Development packages
-
 django-debug-toolbar
 coverage
