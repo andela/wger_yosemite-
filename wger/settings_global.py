@@ -118,7 +118,8 @@ MIDDLEWARE_CLASSES = (
     # Javascript Header. Sends helper headers for AJAX
     'wger.utils.middleware.JavascriptAJAXRedirectionMiddleware',
 
-    # Custom authentication middleware. Creates users on-the-fly for certain paths
+    # Custom authentication middleware. Creates users on-the-fly for
+    # certain paths
     'wger.utils.middleware.WgerAuthenticationMiddleware',
 
     # Send an appropriate Header so search engines don't index pages
@@ -137,14 +138,16 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
     'wger.utils.helpers.EmailAuthBackend',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.facebook.FacebookOAuth2'
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend'
 
 )
+
+# SOCIAL_AUTH_PIPELINE = ('social_core.pipeline.user.user_details',)
 
 TEMPLATES = [
     {
@@ -417,8 +420,8 @@ SOCIAL_AUTH_GITHUB_SECRET = '73f15dcc1b154052584768b6db2875036eb16207'
 SOCIAL_AUTH_GITHUB_KEY = '1d89b4f381c7829a726b'
 
 # configurations for twitter
-SOCIAL_AUTH_TWITTER_KEY = 'Yxotcw96dLupGYVLuHh1FCSiM'
-SOCIAL_AUTH_TWITTER_SECRET = 'iczraaEFLtBKFDoXXn2nYrFQ3nSQetbgbyd9qkoJImhlwSl3eL'
+SOCIAL_AUTH_TWITTER_KEY = 'tyYbfkBgAuzz70bPqaXXegRmB'
+SOCIAL_AUTH_TWITTER_SECRET = 'S50NkuGEEmWTwdcubSxUUxAzRWW6NXGtcQ8T59E0EckkciWrN1'
 
 # configurations for facebook
 SOCIAL_AUTH_FB_SECRET = '08568980ad7c2f09cf95cbd9fcd94f4e'
