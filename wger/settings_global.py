@@ -19,8 +19,7 @@
 import os
 import re
 import sys
-
-
+import dj_database_url
 '''
 This file contains the global settings that don't usually need to be changed.
 For a full list of options, visit:
@@ -29,7 +28,9 @@ For a full list of options, visit:
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+# DATABASES[‘default’] = dj_database_url.config()
 
+DATABASES = {'default': dj_database_url.config(default=os.environ["DATABASE_URL"])}
 #
 # Application definition
 #
@@ -90,24 +91,15 @@ INSTALLED_APPS = (
     'corsheaders',
 
     # django-bower for installing bower packages
-    'djangobower',
-)
+
+    'djangobower', )
+
 
 # added list of external libraries to be installed by bower
-BOWER_INSTALLED_APPS = (
-    'bootstrap',
-    'components-font-awesome',
-    'd3',
-    'DataTables',
-    'devbridge-autocomplete#1.2.x',
-    'jquery#2.1.x',
-    'metrics-graphics',
-    'shariff',
-    'sortablejs#1.4.x',
-    'tinymce',
-    'tinymce-dist',
-)
-
+BOWER_INSTALLED_APPS = ('bootstrap', 'components-font-awesome', 'd3',
+                        'DataTables', 'devbridge-autocomplete#1.2.x',
+                        'jquery#2.1.x', 'metrics-graphics', 'shariff',
+                        'sortablejs#1.4.x', 'tinymce', 'tinymce-dist', )
 
 MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
@@ -178,14 +170,15 @@ TEMPLATES = [
             'loaders': [
                 # Django mobile
                 'django_mobile.loader.Loader',
-
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
             ],
-            'debug': False
+            'debug':
+            False
         },
     },
 ]
+
 
 # TODO: Temporary fix for django 1.10 and the django-mobile app. If issue #72
 #       is closed, this can be removed.
@@ -202,16 +195,14 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
 
     # Django compressor
-    'compressor.finders.CompressorFinder',
-)
 
+    'compressor.finders.CompressorFinder', )
 
 #
 # Email
 #
 EMAIL_SUBJECT_PREFIX = '[wger] '
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 #
 # Login
@@ -237,31 +228,19 @@ USE_L10N = True
 TIME_ZONE = None
 
 # Restrict the available languages
-LANGUAGES = (
-            ('en', 'English'),
-            ('de', 'German'),
-            ('bg', 'Bulgarian'),
-            ('es', 'Spanish'),
-            ('ru', 'Russian'),
-            ('nl', 'Dutch'),
-            ('pt', 'Portuguese'),
-            ('el', 'Greek'),
-            ('cs', 'Czech'),
-            ('sv', 'Swedish'),
-            ('no', 'Norwegian'),
-            ('fr', 'French'),
-)
+
+LANGUAGES = (('en', 'English'), ('de', 'German'), ('bg', 'Bulgarian'),
+             ('es', 'Spanish'), ('ru', 'Russian'), ('nl', 'Dutch'),
+             ('pt', 'Portuguese'), ('el', 'Greek'), ('cs', 'Czech'),
+             ('sv', 'Swedish'), ('no', 'Norwegian'), ('fr', 'French'), )
 
 # Default language code for this installation.
 LANGUAGE_CODE = 'en'
 
 # All translation files are in one place
-LOCALE_PATHS = (
-    os.path.join(SITE_ROOT, 'locale'),
-)
+LOCALE_PATHS = (os.path.join(SITE_ROOT, 'locale'), )
 
 FLAVOURS_STORAGE_BACKEND = 'session'
-
 
 #
 # Logging
@@ -291,11 +270,9 @@ LOGGING = {
 }
 
 
-#
 # ReCaptcha
 #
 RECAPTCHA_USE_SSL = True
-
 
 #
 # Cache
@@ -307,7 +284,6 @@ CACHES = {
         'TIMEOUT': 30 * 24 * 60 * 60,  # Cache for a month
     }
 }
-
 
 #
 # Easy thumbnails
@@ -337,6 +313,7 @@ THUMBNAIL_ALIASES = {
 #
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # The default is not DEBUG, override if needed
 # COMPRESS_ENABLED = True
@@ -387,18 +364,23 @@ IGNORABLE_404_URLS = (
 #
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 #
 # Application specific configuration options
