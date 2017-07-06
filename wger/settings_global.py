@@ -30,7 +30,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 # DATABASES[‘default’] = dj_database_url.config()
 
-DATABASES = {'default': dj_database_url.config(default=os.environ["DATABASE_URL"])}
+DATABASES = {'default': dj_database_url.config()}
 #
 # Application definition
 #
@@ -398,15 +398,15 @@ WGER_SETTINGS = {
 
 # facebook, twitter and google API keys
 # configurations for twitter
-SOCIAL_AUTH_TWITTER_KEY = 'tyYbfkBgAuzz70bPqaXXegRmB'
-SOCIAL_AUTH_TWITTER_SECRET = 'S50NkuGEEmWTwdcubSxUUxAzRWW6NXGtcQ8T59E0EckkciWrN1'
+SOCIAL_AUTH_TWITTER_KEY = os.getenv('TWITTER_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = os.getenv('TWITTER_SECRET')
 
 # configurations for facebook
-SOCIAL_AUTH_FACEBOOK_SECRET = '08568980ad7c2f09cf95cbd9fcd94f4e'
-SOCIAL_AUTH_FACEBOOK_KEY = '1863950303857081'
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('FB_SECRET')
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('FB_KEY')
 
 # configurations for google
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'i15f6eFYLTm2fbp9J4VkJXoU'
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '28646330538-tb757tthrjpvm66unfafcam9mpftb1uh.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_KEY')
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']

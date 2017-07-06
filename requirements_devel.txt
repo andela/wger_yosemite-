@@ -7,24 +7,11 @@
 
 # Development packages
 
-
-coverage
-alabaster==0.7.10
-astroid==1.5.3
-autopep8==1.3.2
-Babel==2.4.0
-bleach==2.0.0
-certifi==2017.4.17
-chardet==3.0.4
-coverage==4.4.1
-defusedxml==0.5.0
-Django==1.9.13
-django-appconf==1.0.2
 django-bootstrap-breadcrumbs==0.8.2
 django-bower==5.2.0
 django-compressor==2.1.1
 django-cors-headers==2.1.0
-django-debug-toolbar==1.8
+
 django-filter==1.0.4
 django-formtools==1.0
 django-mobile==0.7.0
@@ -70,9 +57,3 @@ snowballstemmer==1.2.1
 social-auth-app-django==1.2.0
 social-auth-core==1.4.0
 Sphinx==1.6.2
-sphinxcontrib-websupport==1.0.1
-sqlparse==0.2.3
-urllib3==1.21.1
-webencodings==0.5.1
--e git+https://github.com/andela/wger_yosemite.git@7ff2d5f40ade312d0f4d1bb070756b2d0bc2fe51#egg=wger
-wrapt==1.10.10
