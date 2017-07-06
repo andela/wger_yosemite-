@@ -111,6 +111,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 
+    # config WhiteNoise to allow web app to serve its own static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     # Django mobile
     'django_mobile.middleware.MobileDetectionMiddleware',
     'django_mobile.middleware.SetFlavourMiddleware', )
@@ -169,6 +172,9 @@ STATICFILES_FINDERS = (
 
     # Django compressor
     'compressor.finders.CompressorFinder', )
+
+# forever-cacheable files and compression support
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #
 # Email
