@@ -10,11 +10,31 @@ $(document).ready( function(){
     $('#main_member_list').DataTable({
         paging: false,
         bFilter: true,
-        bInfo : false
+        bInfo : false,
+        order: [[4 , "asc" ]]
     });
+
+    $(".ausers").click(function(){
+        if ($("#all-users").prop("checked") == true){
+            $("#main_member_list tr").show();
+        }
+
+        if ($("#active-users").prop("checked") == true){
+            $("#main_member_list tr:contains('Active')").show();
+            $("#main_member_list tr:contains('Inactive')").hide();
+        }
+
+        if ($("#inactive-users").prop("checked") == true){
+            $("#main_member_list tr:contains('Active')").hide();
+            $("#main_member_list tr:contains('Inactive')").show();
+        }
+    });
+
 });
 </script>
-
+<input type="radio" name="users" id = "all-users" class="ausers" checked> All &nbsp
+<input type="radio" name="users" id = "active-users" class="ausers"> Active &nbsp
+<input type="radio" name="users" id = "inactive-users" class="ausers"> Inactive
 <table class="table table-hover" id="main_member_list">
     <thead>
         <tr>
@@ -26,8 +46,7 @@ $(document).ready( function(){
     </thead>
     <tbody>
         {% for current_user in user_table.users %}
-        {% if current_user.obj.is_active %}
-        <tr>
+        <tr {% if not current_user.obj.is_active %}  style="background: #ffede5;" {% endif %}>
             <td>
                 {{current_user.obj.pk}}
             </td>
@@ -54,10 +73,13 @@ $(document).ready( function(){
             <td>
                 <a href="{{ current_user.obj.userprofile.gym.get_absolute_url }}">
                 </a>
-                Active
+                {% if current_user.obj.is_active %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
             </td>
         </tr>
-        {% endif %}
         {% endfor %}
 </tbody>
 </table>
