@@ -520,14 +520,13 @@ class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         '''
         context = super(UserListView, self).get_context_data(**kwargs)
         context['show_gym'] = True
-        context['user_table'] = {
-            'keys':
-            [_('ID'),
-             _('Username'),
-             _('Name'),
-             _('Last activity'),
-             _('Gym')],
-            'users':
-            context['object_list']['members']
-        }
+
+        context['user_table'] = {'keys': [_('ID'),
+                                          _('Username'),
+                                          _('Name'),
+                                          _('Last activity'),
+                                          _('Gym'),
+                                          _('Status')],
+                                 'users': context['object_list']['members']}
+
         return context
