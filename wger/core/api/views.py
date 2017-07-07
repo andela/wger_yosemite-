@@ -42,8 +42,10 @@ from wger.utils.permissions import UpdateOnlyPermission, WgerPermission, ApiRegi
 
 
 class UserViewSet(viewsets.ModelViewSet):
- +    serializer_class = UserSerializer
- +    permission_classes = (ApiRegistrationPermission, AllowAny,)
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (ApiRegistrationPermission, AllowAny,)
+
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     '''
@@ -94,7 +96,7 @@ class DaysOfWeekViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = DaysOfWeek.objects.all()
     serializer_class = DaysOfWeekSerializer
     ordering_fields = '__all__'
-    filter_fields = ('day_of_week', )
+    filter_fields = ('day_of_week',)
 
 
 class LicenseViewSet(viewsets.ReadOnlyModelViewSet):
@@ -116,7 +118,7 @@ class RepetitionUnitViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = RepetitionUnit.objects.all()
     serializer_class = RepetitionUnitSerializer
     ordering_fields = '__all__'
-    filter_fields = ('name', )
+    filter_fields = ('name',)
 
 
 class WeightUnitViewSet(viewsets.ReadOnlyModelViewSet):
@@ -126,4 +128,4 @@ class WeightUnitViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WeightUnit.objects.all()
     serializer_class = WeightUnitSerializer
     ordering_fields = '__all__'
-    filter_fields = ('name', )
+    filter_fields = ('name',)
