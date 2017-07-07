@@ -28,7 +28,6 @@ class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
 
-
 class EquipmentSerializer(serializers.ModelSerializer):
     '''
     Equipment serializer
