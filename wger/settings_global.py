@@ -49,6 +49,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
 
+    # app for social login
+    'social_django',
+
     # Apps from wger proper
     'wger.config',
     'wger.core',
@@ -107,11 +110,13 @@ MIDDLEWARE_CLASSES = (
     # Javascript Header. Sends helper headers for AJAX
     'wger.utils.middleware.JavascriptAJAXRedirectionMiddleware',
 
-    # Custom authentication middleware. Creates users on-the-fly for certain paths
+    # Custom authentication middleware. Creates users on-the-fly for
+    # certain paths
     'wger.utils.middleware.WgerAuthenticationMiddleware',
 
     # Send an appropriate Header so search engines don't index pages
     'wger.utils.middleware.RobotsExclusionMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -119,10 +124,22 @@ MIDDLEWARE_CLASSES = (
     # Django mobile
     'django_mobile.middleware.MobileDetectionMiddleware',
     'django_mobile.middleware.SetFlavourMiddleware',
+
+    # social login auth
+    'social_django.middleware.SocialAuthExceptionMiddleware'
 )
 
-AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',
-                           'wger.utils.helpers.EmailAuthBackend')
+AUTHENTICATION_BACKENDS = (
+    'wger.utils.helpers.EmailAuthBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend'
+
+)
+
+# SOCIAL_AUTH_PIPELINE = ('social_core.pipeline.user.user_details',)
 
 TEMPLATES = [
     {
@@ -140,6 +157,9 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
 
                 # Django mobile
                 'django_mobile.context_processors.flavour',
@@ -270,43 +290,20 @@ CACHES = {
 #
 THUMBNAIL_ALIASES = {
     '': {
-        'micro': {
-            'size': (30, 30)
-        },
-        'micro_cropped': {
-            'size': (30, 30),
-            'crop': 'smart'
-        },
-        'thumbnail': {
-            'size': (80, 80)
-        },
-        'thumbnail_cropped': {
-            'size': (80, 80),
-            'crop': 'smart'
-        },
-        'small': {
-            'size': (200, 200)
-        },
-        'small_cropped': {
-            'size': (200, 200),
-            'crop': 'smart'
-        },
-        'medium': {
-            'size': (400, 400)
-        },
-        'medium_cropped': {
-            'size': (400, 400),
-            'crop': 'smart'
-        },
-        'large': {
-            'size': (800, 800),
-            'quality': 90
-        },
-        'large_cropped': {
-            'size': (800, 800),
-            'crop': 'smart',
-            'quality': 90
-        },
+        'micro': {'size': (30, 30)},
+        'micro_cropped': {'size': (30, 30), 'crop': 'smart'},
+
+        'thumbnail': {'size': (80, 80)},
+        'thumbnail_cropped': {'size': (80, 80), 'crop': 'smart'},
+
+        'small': {'size': (200, 200)},
+        'small_cropped': {'size': (200, 200), 'crop': 'smart'},
+
+        'medium': {'size': (400, 400)},
+        'medium_cropped': {'size': (400, 400), 'crop': 'smart'},
+
+        'large': {'size': (800, 800), 'quality': 90},
+        'large_cropped': {'size': (800, 800), 'crop': 'smart', 'quality': 90},
     },
 }
 
@@ -324,41 +321,30 @@ COMPRESS_CSS_FILTERS = (
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.rCSSMinFilter'
 )
-
-# The default is not DEBUG, override if needed
-# COMPRESS_ENABLED = True
-COMPRESS_CSS_FILTERS = ('compressor.filters.css_default.CssAbsoluteFilter',
-                        'compressor.filters.cssmin.rCSSMinFilter')
-
 COMPRESS_ROOT = STATIC_ROOT
-
 
 # BOWER binary
 if sys.platform.startswith('win32'):
-    BOWER_PATH = os.path.abspath(
-        os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
+    BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
 else:
-    BOWER_PATH = os.path.abspath(
-        os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
-
+    BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
 
 #
 # Django Rest Framework
 #
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('wger.utils.permissions.WgerPermission', ),
-    'PAGINATE_BY':
-    20,
-    'PAGINATE_BY_PARAM':
-    'limit',  # Allow client to override, using `?limit=xxx`.
-    'TEST_REQUEST_DEFAULT_FORMAT':
-    'json',
-    'DEFAULT_AUTHENTICATION_CLASSES':
-    ('rest_framework.authentication.SessionAuthentication',
-     'rest_framework.authentication.TokenAuthentication', ),
+    'DEFAULT_PERMISSION_CLASSES': ('wger.utils.permissions.WgerPermission',),
+    'PAGINATE_BY': 20,
+    'PAGINATE_BY_PARAM': 'limit',  # Allow client to override, using `?limit=xxx`.
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',
-                                'rest_framework.filters.OrderingFilter', )
+                                'rest_framework.filters.OrderingFilter',)
 }
+
 
 #
 # CORS headers: allow all hosts to access the API
@@ -369,7 +355,9 @@ CORS_URLS_REGEX = r'^/api/.*$'
 #
 # Ignore these URLs if they cause 404
 #
-IGNORABLE_404_URLS = (re.compile(r'^/favicon\.ico$'), )
+IGNORABLE_404_URLS = (
+    re.compile(r'^/favicon\.ico$'),
+)
 
 #
 # Password rules
@@ -407,3 +395,18 @@ WGER_SETTINGS = {
     'EMAIL_FROM': 'wger Workout Manager <wger@example.com>',
     'TWITTER': False
 }
+
+# facebook, twitter and google API keys
+# configurations for twitter
+SOCIAL_AUTH_TWITTER_KEY = os.getenv("TWITTER_KEY")
+SOCIAL_AUTH_TWITTER_SECRET = os.getenv("TWITTER_SECRET")
+
+# configurations for facebook
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv("FB_SECRET")
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv("FB_KEY")
+
+# configurations for google
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("GOOGLE_SECRET")
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("GOOGLE_KEY")
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
