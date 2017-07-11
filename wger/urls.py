@@ -80,6 +80,7 @@ v1_api.register(core_api.LicenseResource())
 
 
 # /api/v2 - django rest framework
+
 router = routers.DefaultRouter()
 
 # Manager app
