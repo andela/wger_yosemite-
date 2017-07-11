@@ -78,17 +78,16 @@
     <div id="current-url" data-current-url="{{request_full_path}}"></div>
     <div id="current-language" data-current-language="{{language.short_name}}"></div>
 
+
+
 <footer class="bg-darkest-gray">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <ul class="list-inline quicklinks">
-                    <li><a href="{% url 'software:contribute' %}">{% trans "Product" %}</a></li>
-                     <li><a href="{% url 'core:about' %}">{% trans "About" %}</a></li>
-                    <li><a href="{% url 'core:contact' %}">{% trans "Developer" %}</a></li>
-                    <li><a href="{% url 'software:tos' %}">{% trans "Terms of service" %}</a></li>
+                    <li><a href="{% url 'software:contribute' %}">{% trans "Contribute!" %}</a></li>
+                    <li><a href="{% url 'core:contact' %}">{% trans "Get in touch" %}</a></li>
                 </ul>
-            </div>
             </div>
             <div class="col-md-4">
                 <ul class="list-inline social-buttons">
@@ -118,7 +117,15 @@
                     </li>
                 </ul>
             </div>
+            <div class="col-md-4">
+                <ul class="list-inline quicklinks">
+                    <li><a href="{% url 'core:about' %}">{% trans "About" %}</a></li>
+
+                    <li><a href="{% url 'software:tos' %}">{% trans "Terms of service" %}</a></li>
+                </ul>
+            </div>
         </div>
+    </div>
 </footer>
 
 <script src="{% static 'bower_components/shariff/build/shariff.min.js' %}"></script>
