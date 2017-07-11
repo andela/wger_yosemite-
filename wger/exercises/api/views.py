@@ -183,6 +183,7 @@ class MuscleViewSet(viewsets.ReadOnlyModelViewSet):
     ordering_fields = '__all__'
     filter_fields = ('name', 'is_front')
 
+
 class AllExercisesViewSet(viewsets.ReadOnlyModelViewSet):
     """A read-only API endpoint for an exercise."""
 
