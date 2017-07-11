@@ -72,43 +72,53 @@
 <body id="page-top" class="index">
 
 {% if user.is_authenticated %}
-{% include 'navigation.html' %}
 {% endif  %}
 
     {% block template %}{% endblock %}
     <div id="current-url" data-current-url="{{request_full_path}}"></div>
     <div id="current-language" data-current-language="{{language.short_name}}"></div>
 
-
-
 <footer class="bg-darkest-gray">
-    <div class="row">
-        <div class="col-lg-2" id="footer-logo">Wger</div>
-        <div class="col-lg-6" id="footer-nav">
-            <div class="col-lg-4">
-                <ul>
-                    <li class="footer-nav-header"> Product</li>
-                    <li><a href="{% url 'core:about' %}">About</a></li>
-                    <li><a href="{% url 'software:tos' %}">{% trans "Terms & Service"%}</a></li>
-                    <li><a href="https://wger.de/en/software/issues">Support</a></li>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <ul class="list-inline quicklinks">
+                    <li><a href="{% url 'software:contribute' %}">{% trans "Product" %}</a></li>
+                     <li><a href="{% url 'core:about' %}">{% trans "About" %}</a></li>
+                    <li><a href="{% url 'core:contact' %}">{% trans "Developer" %}</a></li>
+                    <li><a href="{% url 'software:tos' %}">{% trans "Terms of service" %}</a></li>
                 </ul>
             </div>
-            <div class="col-lg-4">
-                <ul>
-                    <li class="footer-nav-header">Developer</li>
-                    <li><a href="https://wger.de/en/software/api">REST API</a></li>
-                    <li><a href="https://wger.readthedocs.io/en/latest/">Docs</a></li>
-                    <li><a href="https://github.com/andela/wger_yosemite">Source Code</a></li>
+            </div>
+            <div class="col-md-4">
+                <ul class="list-inline social-buttons">
+                    <li>
+                        <a href="https://github.com/wger-project/wger" title="Github">
+                            <span class="{% fa_class 'github' %}"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/wger_de" title="Twitter">
+                         <span class="{% fa_class 'twitter' %}"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.transifex.com/rge/wger-workout-manager/" title="{% trans 'Translate' %}">
+                            <span class="{% fa_class 'globe' %}"></span>
+                        </a>
+                    </li>
+                    <li>
+                      {% if show_shariff %}
+                        {% include 'misc/fragments/shariff_modal.html' %}
+                        <a data-toggle="modal" href="#shariffModal" title="Share">
+                          <span class="{% fa_class 'share-alt' %}"></span>
+                        </a>
+                        <div class="clearfix"></div>
+                      {% endif %}
+                    </li>
                 </ul>
             </div>
         </div>
-        <div class="col-lg-4" id="social-networks">
-            <a href="https://www.transifex.com/rge/wger-workout-manager"><img src="{% static 'images/facebook.png' %}" /></a>
-            <a href="https://twitter.com/wger_de"><img src="{% static 'images/twitter.png' %}" />
-            <a href="https://github.com/andela/wger_yosemite"><img src="{% static 'images/github.png' %}" />
-            <br style="clear: both"/>
-        </div>
-    </div>
 </footer>
 
 <script src="{% static 'bower_components/shariff/build/shariff.min.js' %}"></script>

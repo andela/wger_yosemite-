@@ -161,50 +161,24 @@
 .bg-darkest-gray{
     background: #222222;
     border-top: 2px solid gray;
-    padding:50px 0;
-}
-
-.bg-darkest-gray #social-networks img{
-    height: 60px;
-    weight: 60px;
-    margin-left:8px;
 }
 
 
-#footer-logo{
-    border-width: 0px;
-    font-family: 'BrushScriptMT', 'Brush Script MT Italic', 'Brush Script MT';
-    font-weight: 400;
-    font-style: italic;
-    font-size: 60px;
-    color: #808080;
+.sliderformats p {
+    margin: 0;
 }
 
-#footer-nav ul{
-    text-align: left;
-    list-style: none;
-    font-size: 16px;
-
+.sliderformats h2 {
+    margin-bottom:10px;
+    color: #d3d7cf;
 }
 
-#footer-nav ul li{
-    color: #808080;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#footer-nav ul li a {
-    text-decoration: none;
-    color: #808080;
-}
-
-#footer-nav ul li a:hover{
-    color: rgba(59,93,151,1);
-    text-decoration: none;
-}
-
-
-#footer-nav .footer-nav-header{
+.sliderformats p span{
+    margin:0;
+    background-color:rgba(255,255,255,.2);
     color: #fff;
+    padding:10px;
+    line-height: 110%;
 }
 
 

@@ -1,9 +1,6 @@
 {% extends "base_features.html" %}
 {% load i18n staticfiles wger_extras %}
 
-{% load i18n staticfiles compress wger_extras %}
-<html lang="{{language.short_name}}">
-
 {#           #}
 {# Opengraph #}
 {#           #}
@@ -29,7 +26,6 @@
 {% endblock %}
 
 
-
 {#         #}
 {# Content #}
 {#         #}
@@ -44,7 +40,7 @@
             <li data-target="#bootstrap-touch-slider" data-slide-to="2"></li>
         </ol>
 
-        <div class="col-lg-2" id="footer-logo">Wger</div>
+        <!--<div class="col-lg-2" id="footer-logo">Wger</div>-->
 
         <!-- Wrapper For Slides -->
         <div class="carousel-inner" role="listbox">
@@ -56,23 +52,24 @@
                 <img src="{% static 'images/adva.jpg' %}" alt="Bootstrap Touch Slider"  class="slide-image"/>
                 <div class="bs-slider-overlay"></div>
 
-                <div class="container">
-                    <div class="row">
-                        <!-- Slide Text Layer -->
-                        <div class="slide-text slide_style_left">
-                            <h2 data-animation="animated zoomInRight" style="color: yellow">{% trans "Your advantages" %}</h2>
-                            <p data-animation="animated fadeInLeft" style="color: #7ACAFF">
-                            wger Workout Manager is a free, open source web application that manages
-                            your exercises, workouts and nutrition. It started as a pet project of
-                            mine to replace my growing collection of different spreadsheets, but it
-                            has become something other people could also find useful.</p>
-                            <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
-                            {% trans "Register" %}
-                        </a>
-                            <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
-                        {% trans "Login" %}
-                        </a>
-                        </div>
+                <div class="row">
+                    <!-- Slide Text Layer -->
+                    <div class="slide-text slide_style_center sliderformats">
+                        <h2 data-animation="animated zoomInRight">{% trans "Your advantages" %}</h2>
+                        <p data-animation="animated fadeInLeft">
+                            <span>Wger Workout Manager is a free, open source web application</span>
+                        </p>
+
+                        <p data-animation="animated fadeInRight">
+                            <span> It manages your exercises, workouts and nutrition </span>
+                        </p>
+
+                        <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
+                        {% trans "Register" %}
+                    </a>
+                        <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
+                    {% trans "Login" %}
+                    </a>
                     </div>
                 </div>
             </div>
@@ -85,13 +82,16 @@
                 <img src="{% static 'images/main.jpg' %}" alt="Bootstrap Touch Slider"  class="slide-image"/>
                 <div class="bs-slider-overlay"></div>
                 <!-- Slide Text Layer -->
-                <div class="slide-text slide_style_center">
-                    <h2 data-animation="animated flipInX" style="color: yellow">{% trans "Workouts" %}</h2>
-                    <p data-animation="animated lightSpeedIn" style="color: #7ACAFF">
-                            You can create and manage flexible workout routines for any goals you
-                            have. Select exactly which exercises you'll do and how many repetitions,
-                            time or distance you want to do them. You can also combine different
-                            workouts into a schedule</p>
+                <div class="slide-text slide_style_center sliderformats">
+                    <h2 data-animation="animated flipInX" >{% trans "Workouts" %}</h2>
+                    <p data-animation="animated lightSpeedIn">
+                        <span>You can create and manage flexible workout routines for any goals you have.</span>
+                    </p>
+
+                    <p data-animation="animated fadeInRight">
+                        <span>Select exactly which exercises you'll do and how many repetitions, time or distance you
+                            want to do them.</span>
+                    </p>
                         <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
                             {% trans "Register" %}
                         </a>
@@ -109,12 +109,18 @@
                 <img src="{% static 'images/nut.jpg' %}" alt="Bootstrap Touch Slider"  class="slide-image"/>
                 <div class="bs-slider-overlay"></div>
                 <!-- Slide Text Layer -->
-                <div class="slide-text slide_style_right">
-                    <h2 data-animation="animated zoomInLeft" style="color: yellow">{% trans "Nutrition" %}</h2>
-                    <p data-animation="animated fadeInRight" style="color: #7ACAFF">
-                            Enter the weights and repetitions you did for each exercise to generate
-                            diagrams that let you see at a glance how well you are doing. The raw
-                            numbers are of course still accessible.</p>
+                <div class="slide-text slide_style_center sliderformats">
+                    <h2 data-animation="animated zoomInLeft">{% trans "Nutrition" %}</h2>
+                    <p data-animation="animated fadeInRight">
+                        <span>Enter the weights and repetitions you did for each exercise to generate
+                            diagrams that let you see at a glance how well you are doing</span>
+                    </p>
+
+                    <p data-animation="animated fadeInRight">
+                        <span>The raw numbers are of course still accessible.</span>
+                    </p>
+
+
                     <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
                             {% trans "Register" %}
                         </a>
@@ -195,8 +201,8 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                   <div class="jumbotron">
-                    <h2 style="">Sounds Cool? Try Demo</h2>
-                    <p><a class="btn btn-lg btn-default btn-huge" href="{% url 'core:user:registration' %}" role="button" style="font-size:28px">Register now</a></p>
+                    <h2 style="">Sounds Cool?</h2>
+                    <p><a class="btn btn-lg btn-default btn-huge" href="{% url 'core:user:demo-entries' %}" role="button" style="font-size:28px">Try Demo</a></p>
                   </div>
                 </div>
             </div>
