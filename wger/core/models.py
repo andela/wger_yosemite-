@@ -32,6 +32,10 @@ from wger.utils.units import AbstractWeight
 
 from wger.weight.models import WeightEntry
 
+@python_2_unicode_compatible
+class ApiUser(models.Model):
+    user = models.OneToOneField(User)
+    created_by = models.ForeignKey(User, related_name="created_by")
 
 @python_2_unicode_compatible
 class Language(models.Model):

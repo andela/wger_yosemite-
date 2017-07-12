@@ -16,7 +16,7 @@
 # along with Workout Manager.  If not, see <http://www.gnu.org/licenses/>.
 
 from rest_framework import serializers
-
+from wger.core.models import ApiUser
 from django.contrib.auth.models import User
 
 from rest_framework.authtoken.models import Token
@@ -42,6 +42,8 @@ class UserSerializer(serializers.ModelSerializer):
         if password is not None:
             user.set_password(password)
         user.save()
+        new_api_user = ApiUser(user=user, created_by=self.request.user)
+        new_api_user.save()
         return user
 
 
