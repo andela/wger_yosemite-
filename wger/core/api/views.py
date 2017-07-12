@@ -44,13 +44,19 @@ from wger.utils.permissions import UpdateOnlyPermission, WgerPermission, ApiRegi
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    #queryset = ApiUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = (ApiRegistrationPermission, AllowAny,)
 
     def get_queryset(self):
-        queryset = ApiUser.objects.filter(created_by=self.request.user).all()
-        return queryset
+        '''
+        get users created by the logged in user
+        '''
 
+        return [
+            apiuser.user
+            for apiuser in ApiUser.objects.filter(created_by=self.request.user)
+        ]
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
