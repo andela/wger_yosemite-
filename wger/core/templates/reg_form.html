@@ -1,43 +1,35 @@
-{% extends "base.html" %}
+{% extends extend_template %}
 {% load i18n staticfiles wger_extras %}
 
-{% block title %}{% trans "Login" %}{% endblock %}
-
-
 {% block header %}
+
+{{ form.media }}
+
+{% if custom_js %}
+<script type="text/javascript">
+    {{custom_js|safe}}
+</script>
+{% endif %}
 {% endblock %}
+
+
+{% block title %}{{title}}{% endblock %}
+
 
 {% block content %}
-<form action="{% url 'core:user:login' %}{% if next %}?next={{next}}{% endif %}"
+<form action="{{form_action}}"
       method="post"
-      class="form-horizontal">
-    {% trans 'Login' as submit_text %}
+      class="form-horizontal"
+      role="form"
+      {% if enctype %}enctype="{{enctype}}"{% endif %}>
     {% render_form_fields form submit_text %}
-
 </form>
-<div class="row">
-  <div class="col-md-offset-3 col-md-3">
-  <h5>{% trans "No account?" %}</h5>
-  <p>
-    <a href="{% url 'core:user:registration' %}" class="btn btn-block btn-default">
-      <span class="{% fa_class 'sign-in' %}"></span>
-            {% trans "Register" %}
-    </a>
-  </p>
-  </div>
-  <div class="col-md-offset-3 col-md-3">
-  <h5>{% trans "Forgot password?" %}</h5>
-  <p>
-    <a href="{% url 'core:user:password_reset' %}" class="btn btn-block btn-default">
-        <span class="{% fa_class 'key' %}"></span>
-        {% trans "Reset password" %}
-    </a>
-  </p>
-  </div>
-</div>
-
 {% endblock %}
 
+
+<!--
+        Side bar
+-->
 {% block sidebar %}
 <div class="col-md-offset-3 col-md-10">
 <h4>{% trans "Social Login" %}</h4>
