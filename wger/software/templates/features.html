@@ -22,6 +22,7 @@
 
         <!-- Bootstrap bootstrap-touch-slider Slider Main Style Sheet -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/slider.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-social.css' %}"/>
 
 {% endblock %}
 
@@ -64,23 +65,18 @@
                             <span> It manages your exercises, workouts and nutrition </span>
                         </p>
 
+                            <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
+                                {% trans "Register" %}
+                            </a>
+                            <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
+                            {% trans "Login" %}
+                            </a>
 
-                        <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
-                        {% trans "Register" %}
-                    </a>
-                        <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
-                    {% trans "Login" %}
-                    </a>
+                            <a href="{% url 'social:begin' 'twitter' %}" class="page-scroll btn btn-xl btn-social-icon btn-twitter" style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-twitter"></span></a>
+                            <a href="{% url 'social:begin' 'google-oauth2' %}" class="page-scroll btn btn-xl btn-social-icon btn-google"  style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-google"></span></a>
+                            <a href="{% url 'social:begin' 'facebook' %}" class="page-scroll btn btn-xl btn-social-icon btn-facebook"  style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-facebook"></span></a>
 
-                    {% trans "OR" %}
-                            <p>
-                        <a href="{% url 'social:begin' 'twitter' %}">
-                             <i class="fa fa-twitter fa-3x" style="padding: 15px;"></i></a>
-                        <a href="{% url 'social:begin' 'google-oauth2' %}">
-                             <i class="fa fa-google-plus fa-3x" style="padding: 15px; color: maroon"></i></a>
-                        <a href="{% url 'social:begin' 'facebook' %}">
-                             <i class="fa fa-facebook fa-3x" style="padding: 15px;"></i></a>
-                        </p>
+
                     </div>
                 </div>
             </div>
@@ -103,12 +99,18 @@
                         <span>Select exactly which exercises you'll do and how many repetitions, time or distance you
                             want to do them.</span>
                     </p>
-                        <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
-                            {% trans "Register" %}
-                        </a>
-                        <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
-                        {% trans "Login" %}
-                        </a>
+
+                   <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
+                        {% trans "Register" %}
+                    </a>
+                    <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
+                    {% trans "Login" %}
+                    </a>
+
+                    <a href="{% url 'social:begin' 'twitter' %}" class="page-scroll btn btn-xl btn-social-icon btn-twitter" style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-twitter"></span></a>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="page-scroll btn btn-xl btn-social-icon btn-google"  style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-google"></span></a>
+                    <a href="{% url 'social:begin' 'facebook' %}" class="page-scroll btn btn-xl btn-social-icon btn-facebook"  style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-facebook"></span></a>
+
                 </div>
             </div>
             <!-- End of Slide -->
@@ -130,14 +132,18 @@
                     <p data-animation="animated fadeInRight">
                         <span>The raw numbers are of course still accessible.</span>
                     </p>
+                    
+                   <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
+                        {% trans "Register" %}
+                    </a>
+                    <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
+                    {% trans "Login" %}
+                    </a>
 
+                    <a href="{% url 'social:begin' 'twitter' %}" class="page-scroll btn btn-xl btn-social-icon btn-twitter" style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-twitter"></span></a>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="page-scroll btn btn-xl btn-social-icon btn-google"  style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-google"></span></a>
+                    <a href="{% url 'social:begin' 'facebook' %}" class="page-scroll btn btn-xl btn-social-icon btn-facebook"  style="margin-top: 1em;padding: 10px 5px;"><span class="fa fa-facebook"></span></a>
 
-                    <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
-                            {% trans "Register" %}
-                        </a>
-                            <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
-                        {% trans "Login" %}
-                        </a>
                </div>
             </div>
             <!-- End of Slide -->
