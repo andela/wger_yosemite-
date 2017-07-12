@@ -21,6 +21,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import detail_route
 from wger.core.models import ApiUser
 
+
 from rest_framework.permissions import AllowAny
 
 from wger.core.models import (
@@ -49,6 +50,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = ApiUser.objects.filter(created_by=self.request.user).all()
         return queryset
+
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -89,8 +91,7 @@ class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Language.objects.all()
     serializer_class = LanguageSerializer
     ordering_fields = '__all__'
-    filter_fields = ('full_name',
-                     'short_name')
+    filter_fields = ('full_name', 'short_name')
 
 
 class DaysOfWeekViewSet(viewsets.ReadOnlyModelViewSet):
@@ -110,9 +111,7 @@ class LicenseViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = License.objects.all()
     serializer_class = LicenseSerializer
     ordering_fields = '__all__'
-    filter_fields = ('full_name',
-                     'short_name',
-                     'url')
+    filter_fields = ('full_name', 'short_name', 'url')
 
 
 class RepetitionUnitViewSet(viewsets.ReadOnlyModelViewSet):
