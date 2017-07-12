@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+
 <form action="{% url 'core:user:login' %}{% if next %}?next={{next}}{% endif %}"
       method="post"
       class="form-horizontal">
@@ -15,6 +16,8 @@
     {% render_form_fields form submit_text %}
 
 </form>
+
+
 <div class="row">
   <div class="col-md-offset-3 col-md-3">
   <h5>{% trans "No account?" %}</h5>
@@ -43,15 +46,17 @@
 <h4>{% trans "Social Login" %}</h4>
 </br>
 <p>
-<a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-default">
-    {% trans "Login with Twitter" %}<span>  </span> <span class="fa fa-class"></span></a>
-  </br>  </br>
-<a href="{% url 'social:begin' 'facebook' %}"class="btn btn-block btn-default">
-    {% trans "Login with Facebook" %}<span>  </span> <span class="fa fa-class"></span></a>
-    </br>  </br>
-<a href="{% url 'social:begin' 'google-oauth2' %}"class="btn btn-block btn-default">
-    {% trans "Login with Google" %}<span>  </span> <span class="fa fa-class"></span></a>
+    <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-social btn-twitter">
+            <span class="fa fa-twitter"></span> Sign in with Twitter
+          </a>
+  </br>
+    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-block btn-social btn-facebook">
+            <span class="fa fa-facebook"></span> Sign in with Facebook
+          </a>
     </br>
+    <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-social btn-google">
+            <span class="fa fa-google"></span> Sign in with Google
+          </a>
 </p>
 </div>
 {% endblock %}

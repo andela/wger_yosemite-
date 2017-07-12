@@ -139,13 +139,12 @@
 
 #about {
     background:rgba(24,58,116,1);
-    padding: 50px 0;
+    padding: 20px 0;
 }
 
 #about .jumbotron {
     background:rgba(24,58,116,1);
     height:200px;
-    border:5px solid rgba(59,93,151,1);
     padding:50px 0;
     margin:0;
 }
