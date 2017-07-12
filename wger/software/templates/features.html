@@ -64,25 +64,23 @@
                             <span> It manages your exercises, workouts and nutrition </span>
                         </p>
 
+
                         <a href="{% url 'core:user:registration' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
                         {% trans "Register" %}
                     </a>
                         <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;padding: 10px 5px; width:150px">
                     {% trans "Login" %}
-
-                            </br>
-                    {% trans "OR" %}
-                            </br>
-
-                            <p>
-                    <a href="{% url 'social:begin' 'twitter' %}">
-                         <i class="fa fa-twitter fa-3x" style="padding: 15px;"></i></a>
-                    <a href="{% url 'social:begin' 'google-oauth2' %}">
-                         <i class="fa fa-google-plus fa-3x" style="padding: 15px;"></i></a>
-                    <a href="{% url 'social:begin' 'facebook' %}">
-                         <i class="fa fa-facebook fa-3x" style="padding: 15px;"></i></a>
-                    </p>
                     </a>
+
+                    {% trans "OR" %}
+                            <p>
+                        <a href="{% url 'social:begin' 'twitter' %}">
+                             <i class="fa fa-twitter fa-3x" style="padding: 15px;"></i></a>
+                        <a href="{% url 'social:begin' 'google-oauth2' %}">
+                             <i class="fa fa-google-plus fa-3x" style="padding: 15px;"></i></a>
+                        <a href="{% url 'social:begin' 'facebook' %}">
+                             <i class="fa fa-facebook fa-3x" style="padding: 15px;"></i></a>
+                        </p>
                     </div>
                 </div>
             </div>
