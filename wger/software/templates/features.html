@@ -42,6 +42,25 @@
                     <a href="{% url 'core:user:login' %}" class="page-scroll btn btn-xl" style="margin-top: 1em;">
                         {% trans "Login" %}
                     </a>
+
+                    <p>
+                      </br>
+                    {% trans "OR" %}
+
+                    </br>
+                    <p>
+                    <a href="{% url 'social:begin' 'twitter' %}"
+                     btn btn-twitter style="color: #FFFFFF">
+                         <i class="fa fa-twitter fa-3x" style="padding: 15px;"></i></a>
+                    <a href="{% url 'social:begin' 'google-oauth2' %}"
+                    btn btn-google style="color: #FFFFFF">
+                         <i class="fa fa-google-plus fa-3x" style="padding: 15px;"></i></a>
+                    <a href="{% url 'social:begin' 'facebook' %}"
+                    btn btn-google style="color: #FFFFFF">
+                         <i class="fa fa-facebook fa-3x" style="padding: 15px;"></i></a>
+                    </p>
+                    </div>
+                  </p>
                 {% endif %}
             </div>
         </div>
