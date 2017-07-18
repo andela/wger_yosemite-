@@ -20,6 +20,7 @@ import os
 import re
 import sys
 import dj_database_url
+
 '''
 This file contains the global settings that don't usually need to be changed.
 For a full list of options, visit:
@@ -29,6 +30,7 @@ For a full list of options, visit:
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 DATABASES = {'default': dj_database_url.config()}
+
 #
 # Application definition
 #
@@ -131,9 +133,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend'
-
 )
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -186,7 +186,6 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
 
     # Django compressor
-
     'compressor.finders.CompressorFinder', )
 
 #
@@ -200,7 +199,6 @@ EMAIL_SUBJECT_PREFIX = '[wger] '
 #
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
-
 
 #
 # Internationalization
@@ -315,7 +313,8 @@ COMPRESS_ROOT = STATIC_ROOT
 if sys.platform.startswith('win32'):
     BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
 else:
-    BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
+    BOWER_PATH = os.path.abspath(
+        os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
 
 #
 # Django Rest Framework
