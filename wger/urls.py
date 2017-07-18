@@ -81,6 +81,7 @@ v1_api.register(core_api.LicenseResource())
 
 
 # /api/v2 - django rest framework
+
 router = routers.DefaultRouter()
 
 # Manager app
@@ -104,12 +105,10 @@ router.register(
     r'workoutlog', manager_api_views.WorkoutLogViewSet, base_name='workoutlog')
 
 # Core app
-
 router.register(r'register', core_api_views.UserViewSet, base_name='user')
 router.register(r'userprofile', core_api_views.UserProfileViewSet, base_name='userprofile')
 router.register(r'language', core_api_views.LanguageViewSet, base_name='language')
 router.register(r'daysofweek', core_api_views.DaysOfWeekViewSet, base_name='daysofweek')
-
 router.register(r'license', core_api_views.LicenseViewSet, base_name='license')
 router.register(
     r'setting-repetitionunit',
@@ -143,7 +142,6 @@ router.register(r'exercises', exercises_api_views.AllExercisesViewSet,
                 base_name='view_exercises')
 
 # Nutrition app
-
 router.register(
     r'ingredient',
     nutrition_api_views.IngredientViewSet,
@@ -166,7 +164,6 @@ router.register(
     r'mealitem', nutrition_api_views.MealItemViewSet, base_name='mealitem')
 
 # Weight app
-
 router.register(r'weightentry', weight_api_views.WeightEntryViewSet, base_name='weightentry')
 
 from django.contrib import admin

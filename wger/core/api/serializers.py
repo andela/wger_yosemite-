@@ -22,13 +22,8 @@ from django.contrib.auth.models import User
 
 from rest_framework.authtoken.models import Token
 
-from wger.core.models import (
-    UserProfile,
-    Language,
-    DaysOfWeek,
-    License,
-    RepetitionUnit,
-    WeightUnit)
+from wger.core.models import (UserProfile, Language, DaysOfWeek, License,
+                              RepetitionUnit, WeightUnit)
 
 
 class UserSerializer(serializers.ModelSerializer):

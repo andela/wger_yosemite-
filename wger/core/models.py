@@ -93,13 +93,13 @@ class Language(models.Model):
 class UserProfile(models.Model):
     GENDER_MALE = '1'
     GENDER_FEMALE = '2'
-    GENDER = ((GENDER_MALE, _('Male')), (GENDER_FEMALE, _('Female')),)
-
+    GENDER = ((GENDER_MALE, _('Male')), (GENDER_FEMALE, _('Female')), )
+    
     INTENSITY_LOW = '1'
     INTENSITY_MEDIUM = '2'
     INTENSITY_HIGH = '3'
     INTENSITY = ((INTENSITY_LOW, _('Low')), (INTENSITY_MEDIUM, _('Medium')),
-                 (INTENSITY_HIGH, _('High')),)
+                 (INTENSITY_HIGH, _('High')), )
 
     UNITS_KG = 'kg'
     UNITS_LB = 'lb'
@@ -478,8 +478,8 @@ by the US Department of Agriculture. It is extremely complete, with around
         Create a new weight entry as needed
         '''
         if (not WeightEntry.objects.filter(user=self.user).exists() or
-                (datetime.date.today() - WeightEntry.objects.filter(
-                    user=self.user).latest().date > datetime.timedelta(days=3))):
+            (datetime.date.today() - WeightEntry.objects.filter(
+                user=self.user).latest().date > datetime.timedelta(days=3))):
             entry = WeightEntry()
             entry.weight = weight
             entry.user = self.user

@@ -24,21 +24,15 @@ from wger.core.models import ApiUser
 
 from rest_framework.permissions import AllowAny
 
-from wger.core.models import (
-    UserProfile,
-    Language,
-    DaysOfWeek,
-    License,
-    RepetitionUnit,
-    WeightUnit)
+from wger.core.models import (UserProfile, Language, DaysOfWeek, License,
+                              RepetitionUnit, WeightUnit)
 from wger.core.api.serializers import (
-    UsernameSerializer,
-    LanguageSerializer,
-    DaysOfWeekSerializer,
-    LicenseSerializer,
-    RepetitionUnitSerializer,
-    WeightUnitSerializer
+    UsernameSerializer,LanguageSerializer,DaysOfWeekSerializer,
+    LicenseSerializer, RepetitionUnitSerializer, WeightUnitSerializer
 )
+
+from wger.core.api.serializers import UserprofileSerializer
+from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
 from wger.core.api.serializers import UserprofileSerializer, UserSerializer
 from wger.utils.permissions import UpdateOnlyPermission, WgerPermission, ApiRegistrationPermission
 
@@ -57,8 +51,7 @@ class UserViewSet(viewsets.ModelViewSet):
             apiuser.user
             for apiuser in ApiUser.objects.filter(created_by=self.request.user)
         ]
-
-
+      
 class UserProfileViewSet(viewsets.ModelViewSet):
     '''
     API endpoint for workout objects
