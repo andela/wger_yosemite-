@@ -121,6 +121,20 @@ $(document).ready(function() {
         <a href="{% url 'exercise:exercise:add' %}" class="btn btn-success btn-sm">
             {% trans "Add new exercise" %}
         </a>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="{% fa_class 'cog' %}"></span>
+        {% trans "Options" %}
+        </button>
+        <ul class="dropdown-menu">
+        <li{% if active_tab == 'fitbit' %}class="active"{% endif %}>
+            <a href="{% url 'fitbit' %}">
+              <span class="{% fa_class 'upload' %}"></span>
+                {% trans "Import from Fitbit" %}
+            </a>
+        </li>
+    </ul>
+  </div>
     {% else %}
         <a href="#" class="btn btn-success btn-sm disabled">
             {% trans "Add new exercise" %}<br>
