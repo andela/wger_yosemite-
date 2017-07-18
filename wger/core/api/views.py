@@ -38,7 +38,6 @@ from wger.utils.permissions import UpdateOnlyPermission, WgerPermission, ApiRegi
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    #queryset = ApiUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = (ApiRegistrationPermission, AllowAny,)
 
