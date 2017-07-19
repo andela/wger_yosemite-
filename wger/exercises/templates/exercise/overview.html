@@ -128,7 +128,7 @@ $(document).ready(function() {
         </button>
         <ul class="dropdown-menu">
         <li{% if active_tab == 'fitbit' %}class="active"{% endif %}>
-            <a href="{% url 'fitbit' %}">
+            <a href="{% url 'fitbit_sync' %}">
               <span class="{% fa_class 'upload' %}"></span>
                 {% trans "Import from Fitbit" %}
             </a>
