@@ -19,7 +19,7 @@ import logging
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.template.context_processors import csrf
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.utils import translation
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
@@ -43,15 +43,18 @@ from wger.core.forms import (UserPreferencesForm, UserPersonalInformationForm,
                              RegistrationFormNoCaptcha, UserLoginForm)
 from wger.core.models import Language
 from wger.manager.models import (WorkoutLog, WorkoutSession, Workout)
-from wger.nutrition.models import NutritionPlan, Ingredient
 
+from wger.nutrition.models import NutritionPlan
 from wger.config.models import GymConfig
 from wger.weight.models import WeightEntry
 from wger.gym.models import (AdminUserNote, GymUserConfig, Contract)
 from wger.exercises.models import (Exercise, ExerciseCategory)
+from wger.utils.helpers import smart_capitalize
+from wger.core.models import License
 from fitbit import FitbitOauth2Client
 import requests
 import datetime
+import json
 import os
 
 logger = logging.getLogger(__name__)
@@ -74,7 +77,7 @@ def login(request):
 
 
 @login_required
-def fitbit_authorisation(request, code=None):
+def fitbit_import(request, code=None):
     '''
     Imports data from fitbit if user authorises wger to do so
     '''
@@ -102,37 +105,67 @@ def fitbit_authorisation(request, code=None):
         # Get user weight data from fitbit
         response = requests.post(fitbit_client.request_token_url, form,
                                  headers=headers).json()
-
         if "access_token" in response:
             token = response['access_token']
             user_id = response['user_id']
             headers['Authorization'] = 'Bearer ' + token
 
-            response_weight = requests.get('https://api.fitbit.com/1/user/' +
-                                           user_id + '/profile.json',
-                                           headers=headers)
+            if 'weight' in response['scope']:
+                period = "30d"
+                end_date = datetime.datetime.today().strftime('%Y-%m-%d')
 
-            # add weight and activity to db
-            weight = response_weight.json()['user']['weight']
-            try:
-                entry = WeightEntry()
-                entry.weight = weight
-                entry.user = request.user
-                entry.date = datetime.date.today()
-                entry.save()
-                messages.success(request, _(
-                    'Successfully synced weight data.'))
-            except Exception as error:
-                if "UNIQUE constraint failed" in str(error):
-                    messages.info(request, _(
-                        'Already synced up for today.'))
+                uri = user_id + '/body/log/weight/date/{}/{}.json'.format(end_date, period)
+                response_weight = requests.get('https://api.fitbit.com/1/user/' +
+                                               uri,
+                                               headers=headers)
 
-            return HttpResponseRedirect(reverse(
-                'weight:overview',
-                kwargs={'username': request.user.username}))
+                weight = response_weight.json()['weight']
+                try:
+                    for w in weight:
+                        entry = WeightEntry()
+                        entry.weight = w['weight']
+                        entry.user = request.user
+                        entry.date = datetime.datetime.strptime(w['date'],'%Y-%m-%d')
+                        entry.save()
+
+                    messages.success(request, _(
+                            'Successfully synced weight data.'))
+
+                except Exception as error:
+                    if "UNIQUE constraint failed" in str(error):
+                        messages.info(request, _(
+                            'Already synced up for today.'))
+                    else:
+                        messages.warning(request, _(
+                            'Couldnt sync the weight data.'))
+
+            if 'activity' in response['scope']:
+                response_activity = requests.get('https://api.fitbit.com/1/user/' +
+                                             user_id + '/activities/date/2017-07-18.json',
+                                             headers=headers).json()
+
+                if not ExerciseCategory.objects.filter(name='Fitbit').exists():
+                    exercise_category = ExerciseCategory()
+                    exercise_category.name = 'Fitbit'
+                    exercise_category.save()
+
+                for detail in response_activity['activities']:
+                    name = detail['name']
+                    description = detail['description']
+
+                    exercise = Exercise()
+                    exercise.name_original = name
+                    exercise.name = name
+                    exercise.category = ExerciseCategory.objects.get(name='Fitbit')
+                    exercise.description = description
+                    exercise.language = Language.objects.get(short_name='en')
+                    exercise.status = 2
+                    exercise.save()
+
+                messages.success(request, _('Successfully synced exercise data.'))
+
         else:
             messages.warning(request, _('Something went wrong.'))
-        return render(request, 'user/fitbit.html', template_data)
 
     # link to page that makes user authorize wger to access their fitbit
     template_data['fitbit_auth_link'] = \
