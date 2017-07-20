@@ -20,6 +20,7 @@ import os
 import re
 import sys
 import dj_database_url
+
 '''
 This file contains the global settings that don't usually need to be changed.
 For a full list of options, visit:
@@ -28,9 +29,9 @@ For a full list of options, visit:
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-# DATABASES[‘default’] = dj_database_url.config()
 
 DATABASES = {'default': dj_database_url.config()}
+
 #
 # Application definition
 #
@@ -91,9 +92,7 @@ INSTALLED_APPS = (
     'corsheaders',
 
     # django-bower for installing bower packages
-
     'djangobower', )
-
 
 # added list of external libraries to be installed by bower
 BOWER_INSTALLED_APPS = ('bootstrap', 'components-font-awesome', 'd3',
@@ -116,7 +115,6 @@ MIDDLEWARE_CLASSES = (
 
     # Send an appropriate Header so search engines don't index pages
     'wger.utils.middleware.RobotsExclusionMiddleware',
-
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -138,9 +136,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend'
 
 )
-
-# SOCIAL_AUTH_PIPELINE = ('social_core.pipeline.user.user_details',)
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -157,7 +152,6 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
 
@@ -179,7 +173,6 @@ TEMPLATES = [
     },
 ]
 
-
 # TODO: Temporary fix for django 1.10 and the django-mobile app. If issue #72
 #       is closed, this can be removed.
 #       https://github.com/gregmuellegger/django-mobile/issues/72
@@ -195,7 +188,6 @@ STATICFILES_FINDERS = (
     'djangobower.finders.BowerFinder',
 
     # Django compressor
-
     'compressor.finders.CompressorFinder', )
 
 #
@@ -209,7 +201,6 @@ EMAIL_SUBJECT_PREFIX = '[wger] '
 #
 LOGIN_URL = '/user/login'
 LOGIN_REDIRECT_URL = '/'
-
 
 #
 # Internationalization
@@ -228,7 +219,6 @@ USE_L10N = True
 TIME_ZONE = None
 
 # Restrict the available languages
-
 LANGUAGES = (('en', 'English'), ('de', 'German'), ('bg', 'Bulgarian'),
              ('es', 'Spanish'), ('ru', 'Russian'), ('nl', 'Dutch'),
              ('pt', 'Portuguese'), ('el', 'Greek'), ('cs', 'Czech'),
@@ -269,7 +259,6 @@ LOGGING = {
     }
 }
 
-
 # ReCaptcha
 #
 RECAPTCHA_USE_SSL = True
@@ -307,7 +296,6 @@ THUMBNAIL_ALIASES = {
     },
 }
 
-
 #
 # Django compressor
 #
@@ -325,9 +313,11 @@ COMPRESS_ROOT = STATIC_ROOT
 
 # BOWER binary
 if sys.platform.startswith('win32'):
-    BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
+    BOWER_PATH = os.path.abspath(
+        os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
 else:
-    BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
+    BOWER_PATH = os.path.abspath(
+        os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
 
 #
 # Django Rest Framework
@@ -345,7 +335,6 @@ REST_FRAMEWORK = {
                                 'rest_framework.filters.OrderingFilter',)
 }
 
-
 #
 # CORS headers: allow all hosts to access the API
 #
@@ -355,6 +344,7 @@ CORS_URLS_REGEX = r'^/api/.*$'
 #
 # Ignore these URLs if they cause 404
 #
+
 IGNORABLE_404_URLS = (
     re.compile(r'^/favicon\.ico$'),
 )
@@ -380,7 +370,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 #
 # Application specific configuration options
