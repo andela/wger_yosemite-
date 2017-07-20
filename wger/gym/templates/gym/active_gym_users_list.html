@@ -15,18 +15,21 @@ $(document).ready( function(){
     });
 
     $(".ausers").click(function(){
-        if ($("#all-users").prop("checked") == true){
+        if ($("#all-users").prop("checked") == true){ 
             $("#main_member_list tr").show();
+            $("ul.breadcrumb li.active").text("All users");
         }
 
         if ($("#active-users").prop("checked") == true){
             $("#main_member_list tr:contains('Active')").show();
             $("#main_member_list tr:contains('Inactive')").hide();
+            $("ul.breadcrumb li.active").text("Active users");
         }
 
         if ($("#inactive-users").prop("checked") == true){
             $("#main_member_list tr:contains('Active')").hide();
             $("#main_member_list tr:contains('Inactive')").show();
+            $("ul.breadcrumb li.active").text("Inactive users");
         }
     });
 
