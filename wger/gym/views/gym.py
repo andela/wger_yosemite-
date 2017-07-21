@@ -66,16 +66,18 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
     permission_required = ('gym.manage_gym', 'gym.gym_trainer',
                            'gym.manage_gyms')
     template_name = 'gym/member_list.html'
+
     def dispatch(self, request, *args, **kwargs):
         '''
         Only managers and trainers for this gym can access the members
         '''
         if request.user.has_perm('gym.manage_gyms') or (
                     (request.user.has_perm('gym.manage_gym') or request.user.has_perm(
-                        'gym.gym_trainer')) and request.user.userprofile.gym_id == int(self.kwargs['pk'])):
+                        'gym.gym_trainer')) and request.user.userprofile.gym_id == int(
+                    self.kwargs['pk'])):
             return super(GymUserListView, self).dispatch(request, *args, **kwargs)
         return HttpResponseForbidden()
-        
+
     def get_queryset(self):
         '''
         Return a list with the users, not really a queryset.
@@ -100,7 +102,7 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
             })
         return out
 
-    def get_context_data(self, **kwargs):
+def get_context_data(self, **kwargs):
         '''
         Pass other info to the template
         '''
@@ -109,9 +111,10 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
         context['name'] = 'All users'
         context['admin_count'] = len(context['object_list']['admins'])
         context['user_count'] = len(context['object_list']['members'])
-        context['user_table'] = {'keys': [_('ID'), _('Username'), _('Name'), _('Last activity'), _('Status')],
-                                 'users': context['object_list']['members'],
-                                 "route": "active"}
+        context['user_table'] = {
+            'keys': [_('ID'), _('Username'), _('Name'), _('Last activity'), _('Status')],
+            'users': context['object_list']['members'],
+            "route": "active"}
         return context
 
 
