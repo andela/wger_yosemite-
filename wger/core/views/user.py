@@ -246,7 +246,7 @@ def registration(request):
     template_data['submit_text'] = _('Register')
     template_data['extend_template'] = 'base.html'
 
-    return render(request, 'form.html', template_data)
+    return render(request, 'reg_form.html', template_data)
 
 
 @login_required

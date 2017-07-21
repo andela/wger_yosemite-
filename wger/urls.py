@@ -80,6 +80,7 @@ v1_api.register(core_api.LicenseResource())
 
 
 # /api/v2 - django rest framework
+
 router = routers.DefaultRouter()
 
 # Manager app
@@ -138,6 +139,8 @@ router.register(
     base_name='exercisecomment')
 router.register(
     r'muscle', exercises_api_views.MuscleViewSet, base_name='muscle')
+router.register(r'exercises', exercises_api_views.AllExercisesViewSet,
+                base_name='view_exercises')
 
 # Nutrition app
 router.register(
