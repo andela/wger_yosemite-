@@ -32,6 +32,7 @@
         <meta property="og:url" content="{{ request_absolute_path }}">
         <meta property="og:type" content="website">
     {% endblock %}
+
     {% block opengraphimages %}
         <meta property="og:image" content="{{ image_absolute_path }}">
     {% endblock %}
@@ -52,6 +53,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bower_components/shariff/build/shariff.min.css' %}">
     {% endcompress %}
 
+    {% block customCSS %}
+
+    {% endblock %}
+
+
+
     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png">
 
     {% compress js %}
@@ -65,7 +72,6 @@
 <body id="page-top" class="index">
 
 {% if user.is_authenticated %}
-{% include 'navigation.html' %}
 {% endif  %}
 
     {% block template %}{% endblock %}
@@ -123,6 +129,11 @@
 </footer>
 
 <script src="{% static 'bower_components/shariff/build/shariff.min.js' %}"></script>
+
+{% block customJS %}
+
+{% endblock%}
+
 </body>
 {% endspaceless_config %}
 </html>
