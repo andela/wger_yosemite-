@@ -78,12 +78,9 @@ class GymUserListView(LoginRequiredMixin,
         '''
 
         if request.user.has_perm('gym.manage_gyms') \
-                or (request.user.has_perm('gym.manage_gym')
-                    or request.user.has_perm('gym.gym_trainer')) \
-                        and request.user.userprofile.gym_id == int(self.kwargs['pk'
-                                                                   ]):
-            return super(GymUserListView, self).dispatch(request,
-                                                         *args, **kwargs)
+                or (request.user.has_perm('gym.manage_gym') or request.user.has_perm('gym.gym_trainer')) \
+                and request.user.userprofile.gym_id == int(self.kwargs['pk']):
+            return super(GymUserListView, self).dispatch(request, *args, **kwargs)
         return HttpResponseForbidden()
 
     def get_queryset(self):
@@ -92,10 +89,8 @@ class GymUserListView(LoginRequiredMixin,
         '''
 
         out = {'admins': [], 'members': []}
-        for u in Gym.objects.get_members(self.kwargs['pk'
-                                         ]).select_related('usercache'):
-            out['members'].append({'obj': u,
-                                   'last_log': u.usercache.last_activity})
+        for u in Gym.objects.get_members(self.kwargs['pk']).select_related('usercache'):
+            out['members'].append({'obj': u,'last_log': u.usercache.last_activity})
 
         # admins list
 
@@ -123,8 +118,7 @@ class GymUserListView(LoginRequiredMixin,
         context['user_table'] = {'keys': [_('ID'), _('Username'),
                                           _('Name'), _('Last activity'),
                                           _('Status')],
-                                 'users': context['object_list'
-                                 ]['members'], 'route': 'active'}
+                                 'users': context['object_list']['members'], 'route': 'active'}
         return context
 
 
