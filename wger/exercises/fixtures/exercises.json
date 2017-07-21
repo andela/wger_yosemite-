@@ -545,7 +545,7 @@
             "category": 8,
             "uuid": "9972e42d-43d8-43c0-b547-4638ca3e47be",
             "muscles": [
-                5
+                5,20
             ],
             "license": 1,
             "name": "Frenchpress \u00df-Stange"
@@ -1687,7 +1687,7 @@
             "category": 8,
             "uuid": "38919515-ce04-4383-9c3f-5846edd0e844",
             "muscles": [
-                1
+                1,19
             ],
             "license": 1,
             "name": "Biceps curls with SZ-bar"
@@ -1711,7 +1711,7 @@
             "category": 8,
             "uuid": "48a59aa8-4568-409c-8afe-f8cb99c558ea",
             "muscles": [
-                1
+                1,17,19
             ],
             "license": 1,
             "name": "Biceps curls with dumbbell"
@@ -1773,7 +1773,7 @@
             "description": "<p>Hold the SZ-bar and lay down on a flat bench in such a way that around 1/4 of your head is over the edge. Stretch your arms with the bar and bend them so that the bar is lowered. Just before it touches your forehead, push it up.</p>\n<p>Pay attention to your elbows and arms: only the triceps are doing the work, the rest of the arms should not move.</p>",
             "equipment": [
                 8,
-                2
+                2,20
             ],
             "creation_date": null,
             "category": 8,
@@ -1796,13 +1796,13 @@
             "description": "<p>Hold the dumbbells and lay down on a flat bench in such a way that around 1/4 of your head is over the edge. Stretch your arms with the weights and bend them so that the dumbbells are lowered (make sure they don't touch each other). Just before they touch your forehead, push them up.</p>\n<p>Pay attention to your elbows and arms: only the triceps are doing the work, the rest of the arms should not move.</p>",
             "equipment": [
                 8,
-                3
+                3,20,19
             ],
             "creation_date": null,
             "category": 8,
             "uuid": "ee00d53e-4482-44aa-b780-bbc570061841",
             "muscles": [
-                5
+                5,20,19
             ],
             "license": 1,
             "name": "French press (skullcrusher) dumbbells"
@@ -1844,7 +1844,7 @@
             "category": 8,
             "uuid": "d147a6c2-ce64-424b-baf3-4ca841a51512",
             "muscles": [
-                1
+                1,20
             ],
             "license": 1,
             "name": "Dumbbells on scott machine"
@@ -2556,7 +2556,7 @@
             "category": 11,
             "uuid": "9e672a47-ad9e-4ae1-8fbe-011646da1c37",
             "muscles": [
-                4
+                4,19
             ],
             "license": 1,
             "name": "Fly with cable"
@@ -2924,7 +2924,7 @@
             "category": 12,
             "uuid": "d46adbda-7c60-42a0-b1fd-9ec111b35956",
             "muscles": [
-                12
+                12,19
             ],
             "license": 1,
             "name": "Pull ups on machine"
@@ -3032,7 +3032,7 @@
             "category": 11,
             "uuid": "754391c6-39d5-4bb6-a311-68a520f6fd3a",
             "muscles": [
-                4
+                4,19
             ],
             "license": 1,
             "name": "Fly with dumbbells"
@@ -3268,7 +3268,7 @@
             "category": 12,
             "uuid": "079c2147-1030-4c7d-9cb5-e4f17e7768c8",
             "muscles": [
-                2
+                2, 19
             ],
             "license": 1,
             "name": "Chin ups"
@@ -3607,7 +3607,7 @@
             "category": 10,
             "uuid": "53a9f95e-914c-4790-940f-f5346159ea72",
             "muscles": [
-                14
+                14,19
             ],
             "license": 1,
             "name": "Side Crunch"
@@ -4134,7 +4134,7 @@
             "category": 8,
             "uuid": "83e079a9-b61c-413b-b055-f9cf515904f1",
             "muscles": [
-                1
+                1,19
             ],
             "license": 1,
             "name": "Single-arm preacher curl"
@@ -6146,7 +6146,8 @@
                 6,
                 3,
                 15,
-                5
+                5,
+                17
             ],
             "license": 2,
             "name": "Bear Walk"
