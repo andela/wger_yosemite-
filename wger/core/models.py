@@ -93,7 +93,7 @@ class Language(models.Model):
 class UserProfile(models.Model):
     GENDER_MALE = '1'
     GENDER_FEMALE = '2'
-    GENDER = ((GENDER_MALE, _('Male')), (GENDER_FEMALE, _('Female')), )xss
+    GENDER = ((GENDER_MALE, _('Male')), (GENDER_FEMALE, _('Female')), )
     INTENSITY_LOW = '1'
     INTENSITY_MEDIUM = '2'
     INTENSITY_HIGH = '3'
