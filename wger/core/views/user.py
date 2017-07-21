@@ -22,7 +22,8 @@ from django.template.context_processors import csrf
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _, ugettext_lazy
 from django.utils import translation
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin,\
+    LoginRequiredMixin
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth import logout as django_logout
@@ -36,17 +37,24 @@ from django.conf import settings
 from rest_framework.authtoken.models import Token
 
 from wger.utils.constants import USER_TAB
-from wger.utils.generic_views import WgerFormMixin, WgerMultiplePermissionRequiredMixin
+from wger.utils.generic_views import WgerFormMixin,\
+    WgerMultiplePermissionRequiredMixin
 from wger.utils.user_agents import check_request_amazon, check_request_android
 from wger.core.forms import (UserPreferencesForm, UserPersonalInformationForm,
                              PasswordConfirmationForm, RegistrationForm,
                              RegistrationFormNoCaptcha, UserLoginForm)
 from wger.core.models import Language
 from wger.manager.models import (WorkoutLog, WorkoutSession, Workout)
+
 from wger.nutrition.models import NutritionPlan
 from wger.config.models import GymConfig
 from wger.weight.models import WeightEntry
 from wger.gym.models import (AdminUserNote, GymUserConfig, Contract)
+from wger.exercises.models import (Exercise, ExerciseCategory)
+from fitbit import FitbitOauth2Client
+import requests
+import datetime
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -67,12 +75,125 @@ def login(request):
         extra_context=context)
 
 
+@login_required
+def fitbit_import(request, code=None):
+    '''
+    Imports data from fitbit if user authorises wger to do so
+    '''
+    template_data = {}
+    client_id = os.getenv('FITBIT_CLIENT_ID')
+    client_secret = os.getenv('FITBIT_SECRET')
+
+    fitbit_client = FitbitOauth2Client(client_id, client_secret)
+
+    # if request is coming from fitbit site, get token
+    if 'code' in request.GET:
+        code = request.GET.get("code", "")
+        form = {
+            'client_secret': client_secret,
+            'code': code,
+            'client_id': client_id,
+            'grant_type': 'authorization_code',
+            'redirect_uri': 'http://127.0.0.1:8000/en/fitbit'
+        }
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            "Authorization":
+            'Basic MjI4RERCOmZiZjJiZGFlYjMwYjllOGI1ZmQyNmQ5Y2MxYmU4YTVh'
+        }
+
+        # Get user weight data from fitbit
+        response = requests.post(fitbit_client.request_token_url, form,
+                                 headers=headers).json()
+        if "access_token" in response:
+            token = response['access_token']
+            user_id = response['user_id']
+            headers['Authorization'] = 'Bearer ' + token
+
+            if 'weight' in response['scope']:
+                period = "30d"
+                end_date = datetime.datetime.today().strftime('%Y-%m-%d')
+
+                uri = user_id + '/body/log/weight/date/{}/{}.json'.format(
+                    end_date, period)
+                response_weight = requests.get(
+                    'https://api.fitbit.com/1/user/' + uri,
+                    headers=headers)
+
+                weight = response_weight.json()['weight']
+                try:
+                    for w in weight:
+                        entry = WeightEntry()
+                        entry.weight = w['weight']
+                        entry.user = request.user
+                        entry.date = datetime.datetime.strptime(w['date'],
+                                                                '%Y-%m-%d')
+                        entry.save()
+
+                    messages.success(request, _(
+                                     'Successfully synced weight data.'))
+
+                except Exception as error:
+                    if "UNIQUE constraint failed" in str(error):
+                        messages.info(request, _(
+                            'Already synced up for today.'))
+                    else:
+                        messages.warning(request, _(
+                            'Couldnt sync the weight data.'))
+
+            if 'activity' in response['scope']:
+                # date = datetime.datetime.today().strftime('%Y-%m-%d')
+                uri = user_id + '/activities/date/2017-07-18.json'.format(date)
+                response_activity = requests.get(
+                    'https://api.fitbit.com/1/user/' + uri,
+                    headers=headers).json()
+
+                if not ExerciseCategory.objects.filter(name='Fitbit').exists():
+                    exercise_category = ExerciseCategory()
+                    exercise_category.name = 'Fitbit'
+                    exercise_category.save()
+                try:
+                    for detail in response_activity['activities']:
+                        name = detail['name']
+                        description = detail['description']
+
+                        exercise = Exercise()
+                        exercise.name_original = name
+                        exercise.name = name
+                        exercise.category = ExerciseCategory.objects.get(
+                            name='Fitbit')
+                        exercise.description = description
+                        exercise.language = Language.objects.get(
+                            short_name='en')
+                        exercise.status = 2
+                        exercise.save()
+
+                    messages.success(request, _(
+                                     'Successfully synced exercise data.'))
+                except Exception as error:
+                    if "UNIQUE constraint failed" in str(error):
+                        messages.info(request, _(
+                            'Already synced up for today.'))
+
+        else:
+            messages.warning(request, _('Something went wrong.'))
+
+    # link to page that makes user authorize wger to access their fitbit
+    template_data['fitbit_auth_link'] = \
+        fitbit_client.authorize_token_url(
+        redirect_uri='http://127.0.0.1:8000/en/fitbit',
+        prompt='consent')[0]
+    return render(request, 'user/fitbit.html', template_data)
+
+
 @login_required()
 def delete(request, user_pk=None):
     '''
-    Delete a user account and all his data, requires password confirmation first
+    Delete a user account and all his data,
+    requires password confirmation first
 
-    If no user_pk is present, the user visiting the URL will be deleted, otherwise
+    If no user_pk is present, the user visiting
+    the URL will be deleted, otherwise
     a gym administrator is deleting a different user
     '''
 
@@ -84,7 +205,8 @@ def delete(request, user_pk=None):
         # gym or is an admin as well. General admins can delete all users.
         if not request.user.has_perm('gym.manage_gyms') \
                 and (not request.user.has_perm('gym.manage_gym')
-                     or request.user.userprofile.gym_id != user.userprofile.gym_id
+                     or request.user.userprofile.gym_id !=
+                     user.userprofile.gym_id
                      or user.has_perm('gym.manage_gym')
                      or user.has_perm('gym.gym_trainer')
                      or user.has_perm('gym.manage_gyms')):
@@ -148,8 +270,10 @@ def trainer_login(request, user_pk):
         own = True
 
     # Note: it seems we have to manually set the authentication backend here
-    # - https://docs.djangoproject.com/en/1.6/topics/auth/default/#auth-web-requests
-    # - http://stackoverflow.com/questions/3807777/django-login-without-authenticating
+    # - https://docs.djangoproject.com/en/1.6/topics/auth/default/
+    # auth-web-requests
+    # - http://stackoverflow.com/questions/3807777/django-login-
+    # without-authenticating
     if own:
         del (request.session['trainer.identity'])
     user.backend = 'django.contrib.auth.backends.ModelBackend'
@@ -314,8 +438,10 @@ class UserDeactivateView(LoginRequiredMixin,
         if not request.user.is_authenticated():
             return HttpResponseForbidden()
 
-        if (request.user.has_perm('gym.manage_gym') or request.user.has_perm('gym.gym_trainer')) \
-                and edit_user.userprofile.gym_id != request.user.userprofile.gym_id:
+        if (request.user.has_perm('gym.manage_gym')
+            or request.user.has_perm('gym.gym_trainer')) \
+                and edit_user.userprofile.gym_id != \
+                request.user.userprofile.gym_id:
             return HttpResponseForbidden()
 
         return super(UserDeactivateView, self).dispatch(
@@ -349,8 +475,10 @@ class UserActivateView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
         if not request.user.is_authenticated():
             return HttpResponseForbidden()
 
-        if (request.user.has_perm('gym.manage_gym') or request.user.has_perm('gym.gym_trainer')) \
-                and edit_user.userprofile.gym_id != request.user.userprofile.gym_id:
+        if (request.user.has_perm('gym.manage_gym')
+            or request.user.has_perm('gym.gym_trainer')) \
+                and edit_user.userprofile.gym_id != \
+                request.user.userprofile.gym_id:
             return HttpResponseForbidden()
 
         return super(UserActivateView, self).dispatch(request, *args, **kwargs)
@@ -457,7 +585,8 @@ class UserDetailView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
         if not user.is_authenticated():
             return HttpResponseForbidden()
 
-        if (user.has_perm('gym.manage_gym') or user.has_perm('gym.gym_trainer')) \
+        if (user.has_perm('gym.manage_gym')
+            or user.has_perm('gym.gym_trainer')) \
                 and not user.has_perm('gym.manage_gyms') \
                 and user.userprofile.gym != self.get_object().userprofile.gym:
             return HttpResponseForbidden()
@@ -479,9 +608,11 @@ class UserDetailView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
                 'last_log': logs.last()
             })
         context['workouts'] = out
-        context['weight_entries'] = WeightEntry.objects.filter(user=self.object)\
+        context['weight_entries'] = WeightEntry.objects.filter(
+            user=self.object)\
             .order_by('-date')[:5]
-        context['nutrition_plans'] = NutritionPlan.objects.filter(user=self.object)\
+        context['nutrition_plans'] = NutritionPlan.objects.filter(
+            user=self.object)\
             .order_by('-creation_date')[:5]
         context['session'] = WorkoutSession.objects.filter(
             user=self.object).order_by('-date')[:10]
