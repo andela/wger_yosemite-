@@ -19,14 +19,37 @@ from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route
+from wger.core.models import ApiUser
+
+
+from rest_framework.permissions import AllowAny
 
 from wger.core.models import (UserProfile, Language, DaysOfWeek, License,
                               RepetitionUnit, WeightUnit)
 from wger.core.api.serializers import (
     UsernameSerializer, LanguageSerializer, DaysOfWeekSerializer,
-    LicenseSerializer, RepetitionUnitSerializer, WeightUnitSerializer)
+    LicenseSerializer, RepetitionUnitSerializer, WeightUnitSerializer
+)
+
 from wger.core.api.serializers import UserprofileSerializer
 from wger.utils.permissions import UpdateOnlyPermission, WgerPermission
+from wger.core.api.serializers import UserprofileSerializer, UserSerializer
+from wger.utils.permissions import UpdateOnlyPermission, WgerPermission, ApiRegistrationPermission
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    permission_classes = (ApiRegistrationPermission, AllowAny,)
+
+    def get_queryset(self):
+        '''
+        get users created by the logged in user
+        '''
+
+        return [
+            apiuser.user
+            for apiuser in ApiUser.objects.filter(created_by=self.request.user)
+        ]
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):
@@ -77,7 +100,7 @@ class DaysOfWeekViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = DaysOfWeek.objects.all()
     serializer_class = DaysOfWeekSerializer
     ordering_fields = '__all__'
-    filter_fields = ('day_of_week', )
+    filter_fields = ('day_of_week',)
 
 
 class LicenseViewSet(viewsets.ReadOnlyModelViewSet):
@@ -97,7 +120,7 @@ class RepetitionUnitViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = RepetitionUnit.objects.all()
     serializer_class = RepetitionUnitSerializer
     ordering_fields = '__all__'
-    filter_fields = ('name', )
+    filter_fields = ('name',)
 
 
 class WeightUnitViewSet(viewsets.ReadOnlyModelViewSet):
@@ -107,4 +130,4 @@ class WeightUnitViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = WeightUnit.objects.all()
     serializer_class = WeightUnitSerializer
     ordering_fields = '__all__'
-    filter_fields = ('name', )
+    filter_fields = ('name',)

@@ -17,6 +17,7 @@
 
 from tastypie.api import Api
 from rest_framework import routers
+from rest_framework.authtoken import views as rest_views
 
 from django.conf import settings
 from django.conf.urls import include, url
@@ -104,12 +105,10 @@ router.register(
     r'workoutlog', manager_api_views.WorkoutLogViewSet, base_name='workoutlog')
 
 # Core app
-router.register(
-    r'userprofile', core_api_views.UserProfileViewSet, base_name='userprofile')
-router.register(
-    r'language', core_api_views.LanguageViewSet, base_name='language')
-router.register(
-    r'daysofweek', core_api_views.DaysOfWeekViewSet, base_name='daysofweek')
+router.register(r'register', core_api_views.UserViewSet, base_name='user')
+router.register(r'userprofile', core_api_views.UserProfileViewSet, base_name='userprofile')
+router.register(r'language', core_api_views.LanguageViewSet, base_name='language')
+router.register(r'daysofweek', core_api_views.DaysOfWeekViewSet, base_name='daysofweek')
 router.register(r'license', core_api_views.LicenseViewSet, base_name='license')
 router.register(
     r'setting-repetitionunit',
@@ -159,17 +158,16 @@ router.register(
     r'nutritionplan',
     nutrition_api_views.NutritionPlanViewSet,
     base_name='nutritionplan')
+
 router.register(r'meal', nutrition_api_views.MealViewSet, base_name='meal')
 router.register(
     r'mealitem', nutrition_api_views.MealItemViewSet, base_name='mealitem')
 
 # Weight app
-router.register(
-    r'weightentry',
-    weight_api_views.WeightEntryViewSet,
-    base_name='weightentry')
+router.register(r'weightentry', weight_api_views.WeightEntryViewSet, base_name='weightentry')
 
 from django.contrib import admin
+
 admin.autodiscover()
 
 #
@@ -218,6 +216,8 @@ urlpatterns += [
     url(r'^api/v2/ingredient/search/$',
         nutrition_api_views.search,
         name='ingredient-search'),
+    # Get Authentication token
+    url(r'^api/v2/get-token/', rest_views.obtain_auth_token),
     url(r'^api/v2/', include(router.urls)),
 ]
 

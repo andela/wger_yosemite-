@@ -20,7 +20,7 @@ from wger.gym.views import (gym, config, admin_config, user_config,
                             admin_notes, document, contract, contract_type,
                             contract_option, export)
 
-# 'sub patterns' for gyms
+# 'sub patterns' for gyms 
 patterns_gym = [
     url(r'^list$', gym.GymListView.as_view(), name='list'),
     url(r'^new-user-data/view$', gym.gym_new_user_info, name='new-user-data'),
@@ -30,6 +30,7 @@ patterns_gym = [
     url(r'^(?P<pk>\d+)/members$',
         gym.GymUserListView.as_view(),
         name='user-list'),
+
     url(r'^(?P<gym_pk>\d+)/add-member$',
         gym.GymAddUserView.as_view(),
         name='add-user'),

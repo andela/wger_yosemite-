@@ -29,7 +29,6 @@ For a full list of options, visit:
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-
 DATABASES = {'default': dj_database_url.config()}
 
 #
@@ -134,7 +133,6 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend'
-
 )
 TEMPLATES = [
     {
@@ -313,8 +311,7 @@ COMPRESS_ROOT = STATIC_ROOT
 
 # BOWER binary
 if sys.platform.startswith('win32'):
-    BOWER_PATH = os.path.abspath(
-        os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
+    BOWER_PATH = os.path.abspath(os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower.cmd'))
 else:
     BOWER_PATH = os.path.abspath(
         os.path.join(BASE_DIR, '..', 'node_modules', '.bin', 'bower'))
@@ -380,6 +377,7 @@ WGER_SETTINGS = {
     'USE_RECAPTCHA': False,
     'REMOVE_WHITESPACE': False,
     'ALLOW_REGISTRATION': True,
+    'ALLOW_API_REGISTRATION': True,
     'ALLOW_GUEST_USERS': True,
     'EMAIL_FROM': 'wger Workout Manager <wger@example.com>',
     'TWITTER': False

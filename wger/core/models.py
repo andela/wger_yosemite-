@@ -34,6 +34,15 @@ from wger.weight.models import WeightEntry
 
 
 @python_2_unicode_compatible
+class ApiUser(models.Model):
+    user = models.OneToOneField(User)
+    created_by = models.ForeignKey(User, related_name="created_by")
+
+    def __str__(self):
+        return u"Created by {0}".format(self.full_name)
+
+
+@python_2_unicode_compatible
 class Language(models.Model):
     '''
     Language of an item (exercise, workout, etc.)
@@ -85,7 +94,6 @@ class UserProfile(models.Model):
     GENDER_MALE = '1'
     GENDER_FEMALE = '2'
     GENDER = ((GENDER_MALE, _('Male')), (GENDER_FEMALE, _('Female')), )
-
     INTENSITY_LOW = '1'
     INTENSITY_MEDIUM = '2'
     INTENSITY_HIGH = '3'

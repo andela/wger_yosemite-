@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -57,11 +58,16 @@ class GymListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context
 
 
+# !/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
 class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
                       ListView):
     '''
     Overview of all users for a specific gym
     '''
+
     model = User
     permission_required = ('gym.manage_gym', 'gym.gym_trainer',
                            'gym.manage_gyms')
@@ -71,10 +77,11 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
         '''
         Only managers and trainers for this gym can access the members
         '''
+
         if request.user.has_perm('gym.manage_gyms') \
-            or ((request.user.has_perm('gym.manage_gym')
-                 or request.user.has_perm('gym.gym_trainer'))
-                and request.user.userprofile.gym_id == int(self.kwargs['pk'])):
+                or (request.user.has_perm('gym.manage_gym') \
+                    or request.user.has_perm('gym.gym_trainer')) \
+                and request.user.userprofile.gym_id == int(self.kwargs['pk']):
             return super(GymUserListView, self).dispatch(
                 request, *args, **kwargs)
         return HttpResponseForbidden()
@@ -83,8 +90,8 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
         '''
         Return a list with the users, not really a queryset.
         '''
-        out = {'admins': [], 'members': []}
 
+        out = {'admins': [], 'members': []}
         for u in Gym.objects.get_members(
                 self.kwargs['pk']).select_related('usercache'):
             out['members'].append({
@@ -93,6 +100,7 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
             })
 
         # admins list
+
         for u in Gym.objects.get_admins(self.kwargs['pk']):
             out['admins'].append({
                 'obj': u,
@@ -100,25 +108,34 @@ class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
                     'manage_gym': u.has_perm('gym.manage_gym'),
                     'manage_gyms': u.has_perm('gym.manage_gyms'),
                     'gym_trainer': u.has_perm('gym.gym_trainer'),
-                    'any_admin': is_any_gym_admin(u)
+                    'any_admin': is_any_gym_admin(u),
                 }
             })
+
         return out
 
     def get_context_data(self, **kwargs):
         '''
-        Pass other info to the template
-        '''
+            Pass other info to the template
+            '''
+
         context = super(GymUserListView, self).get_context_data(**kwargs)
         context['gym'] = Gym.objects.get(pk=self.kwargs['pk'])
+        context['name'] = 'All users'
         context['admin_count'] = len(context['object_list']['admins'])
         context['user_count'] = len(context['object_list']['members'])
         context['user_table'] = {
-            'keys': [_('ID'),
-                     _('Username'),
-                     _('Name'),
-                     _('Last activity')],
-            'users': context['object_list']['members']
+            'keys': [
+                _('ID'),
+                _('Username'),
+                _('Name'),
+                _('Last activity'),
+                _('Status')
+            ],
+            'users':
+            context['object_list']['members'],
+            'route':
+            'active'
         }
         return context
 
@@ -246,7 +263,7 @@ def gym_permissions_user_edit(request, user_pk):
         return HttpResponseForbidden()
 
     if user.has_perm('gym.manage_gym'
-                     ) and user.userprofile.gym != member.userprofile.gym:
+                    ) and user.userprofile.gym != member.userprofile.gym:
         return HttpResponseForbidden()
 
     # Calculate available user permissions
@@ -426,7 +443,7 @@ class GymUpdateView(WgerFormMixin, LoginRequiredMixin, PermissionRequiredMixin,
         if not request.user.is_authenticated():
             return HttpResponseForbidden()
 
-        if request.user.has_perm('gym.manage_gym')\
+        if request.user.has_perm('gym.manage_gym') \
                 and not request.user.has_perm('gym.manage_gyms'):
             if request.user.userprofile.gym_id != int(self.kwargs['pk']):
                 return HttpResponseForbidden()

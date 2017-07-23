@@ -8,14 +8,17 @@
 
     {% if perms.gym.manage_gyms %}
         {% breadcrumb "Gyms" "gym:gym:list" %}
-        {% breadcrumb_raw gym "gym:gym:user-list" gym.pk %}
+        {% breadcrumb_raw name "gym:gym:user-list" gym.pk %}
     {% endif %}
 {% endblock %}
 
 
 {% block content %}
 {% if perms.gym.manage_gym or perms.gym.gym_trainer %}
-    {% include 'gym/partial_user_list.html' %}
+    <div id="gym-users">
+        {% include 'gym/active_gym_users_list.html' %}
+    </div>
+
 {% endif %}
 
 
