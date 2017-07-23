@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 # This file is part of wger Workout Manager.
@@ -61,8 +62,8 @@ class GymListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 # -*- coding: utf-8 -*-
 
 
-class GymUserListView(LoginRequiredMixin,
-                      WgerMultiplePermissionRequiredMixin, ListView):
+class GymUserListView(LoginRequiredMixin, WgerMultiplePermissionRequiredMixin,
+                      ListView):
     '''
     Overview of all users for a specific gym
     '''
@@ -78,9 +79,11 @@ class GymUserListView(LoginRequiredMixin,
         '''
 
         if request.user.has_perm('gym.manage_gyms') \
-                or (request.user.has_perm('gym.manage_gym') or request.user.has_perm('gym.gym_trainer')) \
+                or (request.user.has_perm('gym.manage_gym') \
+                    or request.user.has_perm('gym.gym_trainer')) \
                 and request.user.userprofile.gym_id == int(self.kwargs['pk']):
-            return super(GymUserListView, self).dispatch(request, *args, **kwargs)
+            return super(GymUserListView, self).dispatch(
+                request, *args, **kwargs)
         return HttpResponseForbidden()
 
     def get_queryset(self):
@@ -89,18 +92,25 @@ class GymUserListView(LoginRequiredMixin,
         '''
 
         out = {'admins': [], 'members': []}
-        for u in Gym.objects.get_members(self.kwargs['pk']).select_related('usercache'):
-            out['members'].append({'obj': u,'last_log': u.usercache.last_activity})
+        for u in Gym.objects.get_members(
+                self.kwargs['pk']).select_related('usercache'):
+            out['members'].append({
+                'obj': u,
+                'last_log': u.usercache.last_activity
+            })
 
         # admins list
 
         for u in Gym.objects.get_admins(self.kwargs['pk']):
-            out['admins'].append({'obj': u, 'perms': {
-                'manage_gym': u.has_perm('gym.manage_gym'),
-                'manage_gyms': u.has_perm('gym.manage_gyms'),
-                'gym_trainer': u.has_perm('gym.gym_trainer'),
-                'any_admin': is_any_gym_admin(u),
-            }})
+            out['admins'].append({
+                'obj': u,
+                'perms': {
+                    'manage_gym': u.has_perm('gym.manage_gym'),
+                    'manage_gyms': u.has_perm('gym.manage_gyms'),
+                    'gym_trainer': u.has_perm('gym.gym_trainer'),
+                    'any_admin': is_any_gym_admin(u),
+                }
+            })
 
         return out
 
@@ -109,16 +119,24 @@ class GymUserListView(LoginRequiredMixin,
             Pass other info to the template
             '''
 
-        context = super(GymUserListView,
-                        self).get_context_data(**kwargs)
+        context = super(GymUserListView, self).get_context_data(**kwargs)
         context['gym'] = Gym.objects.get(pk=self.kwargs['pk'])
         context['name'] = 'All users'
         context['admin_count'] = len(context['object_list']['admins'])
         context['user_count'] = len(context['object_list']['members'])
-        context['user_table'] = {'keys': [_('ID'), _('Username'),
-                                          _('Name'), _('Last activity'),
-                                          _('Status')],
-                                 'users': context['object_list']['members'], 'route': 'active'}
+        context['user_table'] = {
+            'keys': [
+                _('ID'),
+                _('Username'),
+                _('Name'),
+                _('Last activity'),
+                _('Status')
+            ],
+            'users':
+            context['object_list']['members'],
+            'route':
+            'active'
+        }
         return context
 
 
@@ -152,9 +170,9 @@ def gym_new_user_info(request):
 
     context = {
         'new_user':
-            get_object_or_404(User, pk=request.session['gym.user']['user_pk']),
+        get_object_or_404(User, pk=request.session['gym.user']['user_pk']),
         'password':
-            request.session['gym.user']['password']
+        request.session['gym.user']['password']
     }
     return render(request, 'gym/new_user.html', context)
 
@@ -245,7 +263,7 @@ def gym_permissions_user_edit(request, user_pk):
         return HttpResponseForbidden()
 
     if user.has_perm('gym.manage_gym'
-                     ) and user.userprofile.gym != member.userprofile.gym:
+                    ) and user.userprofile.gym != member.userprofile.gym:
         return HttpResponseForbidden()
 
     # Calculate available user permissions
